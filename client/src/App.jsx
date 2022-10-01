@@ -904,15 +904,19 @@ function App() {
   return (
     <DataContext.Provider value={data}>
     <BrowserRouter>
-      <Routes>        
+      <Routes> 
+        <Route path="/likes" element={<Layout />}>
+          <Route index element={<Likes />} />
+        </Route>       
         <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
           <Route path="search" element={<Container />} />
-          <Route path="likes" element={<Likes />} />
+          {/* <Route path="likes" element={<Likes />} /> */}
           <Route path="albums" element={<Albums />} />
           <Route path="/:albumroute" element={<Album />} />    
         </Route>
+        
         <Route path="*" element="NOT FOUND" />
       </Routes>
     </BrowserRouter>

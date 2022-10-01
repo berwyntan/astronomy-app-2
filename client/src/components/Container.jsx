@@ -13,7 +13,7 @@ export default function Container() {
   const { itemData, feedView, mode,
     cardGridSingle, handleLike, checkLikedItems,
     loadGridSingleView, handleInteraction,
-    checkAlbumData, updateLikesFromAirtable, updateAlbumsFromAirtable
+    checkAlbumData,
   } = dataContext || {};
 
   // map cards

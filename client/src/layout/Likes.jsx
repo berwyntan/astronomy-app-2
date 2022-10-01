@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useContext } from "react"
 import { DataContext } from "../App"
 
@@ -7,9 +8,15 @@ export default function Likes() {
 
     const dataContext = useContext(DataContext);
 
-    const { likedItemData } = dataContext || {};
+    const { likedItemData, handleLikeMode } = dataContext || {};
 
-    const totalLikes = likedItemData.length
+    const totalLikes = likedItemData.length;
+
+    useEffect(() => {
+        const delay = () => setTimeout(handleLikeMode(), 0);
+        setTimeout(delay, 0);
+        return (clearTimeout(delay));        
+    });
     
     return(
         <>
