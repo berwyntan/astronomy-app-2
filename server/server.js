@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/random', require('./routes/random'));
-
+app.use('/latest', require('./routes/latest'));
 
 
 mongoose.connection.once('open', () => {

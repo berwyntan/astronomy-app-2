@@ -120,7 +120,7 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    axios.get(`http://localhost:5000/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
       setItemData(prevData => (
@@ -135,6 +135,21 @@ function App() {
       }))
       calculateDateForApi()
     })
+    // axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    // .then(function (response) {
+    //   // handle success
+    //   setItemData(prevData => (
+    //     [
+    //       ...prevData,
+    //       ...response.data.reverse()
+    //     ]
+    //   ))
+    //   setMode(prevState => ({
+    //     ...prevState,
+    //     isLoading: false,
+    //   }))
+    //   calculateDateForApi()
+    // })
     .catch(function (error) {
       // handle error
       console.log(error);
