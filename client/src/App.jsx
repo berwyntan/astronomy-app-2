@@ -7,6 +7,9 @@ import Container from './components/Container'
 import Albums from './layout/Albums'
 import Album from './layout/Album'
 import Search from './layout/Search'
+import Shuffle from './layout/Shuffle'
+import Latest from './layout/Latest'
+import NotFound from './layout/NotFound'
 
 import data from './data/sampleData'
 
@@ -290,6 +293,10 @@ function App() {
       setItemData([]);
       mode.saves && callApiByDate();
     }    
+    if (mode.latest) {
+      setItemData([]);
+      callApiByDate();
+    }
   }  
 
   
@@ -904,6 +911,7 @@ function App() {
     updateLikesFromAirtable,
     updateAlbumsFromAirtable,
     callApiByDate,
+    callApiRandom,
   }
 
   
@@ -911,6 +919,9 @@ function App() {
     <DataContext.Provider value={data}>
     <BrowserRouter>
       <Routes> 
+        <Route path="/shuffle" element={<Layout />}>
+          <Route index element={<Shuffle />} />
+        </Route> 
         <Route path="/search" element={<Layout />}>
           <Route index element={<Search />} />
         </Route> 
@@ -920,18 +931,17 @@ function App() {
         <Route path="/albums" element={<Layout />}>
           <Route index element={<Albums />} />
           <Route path=":albumroute" element={<Album />} />
-        </Route>  
-
+        </Route>   
+        <Route path="/latest" element={<Layout />}>
+          <Route index element={<Latest />} />
+        </Route>        
         <Route path="/" element={<Layout />}>
-          <Route index element={<Container />} />
-          <Route path="shuffle" element={<Container />} />
-          <Route path="search" element={<Container />} />
-          {/* <Route path="likes" element={<Likes />} /> */}
-          {/* <Route path="albums" element={<Albums />} /> */}
-              
-        </Route>
-        
-        <Route path="*" element="NOT FOUND" />
+          <Route index element={<Latest />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>        
+        {/* <Route path="*" element={<Layout />}>
+          <NotFound />
+        </Route> */}
       </Routes>
     </BrowserRouter>
     </DataContext.Provider>
