@@ -23,6 +23,7 @@ import Airtable from 'airtable'
 
 export const DataContext = createContext();
 
+
 Airtable.configure({ 
   apiKey: 'keyOqYhriP7UXVBht',
   endpointUrl: 'https://api.airtable.com',
@@ -120,7 +121,7 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`http://localhost:5000/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    axios.get(`${import.meta.env.VITE_SERVER}/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
       setItemData(prevData => (
@@ -165,7 +166,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get(`http://localhost:5000/random`)
+    axios.get(`${import.meta.env.VITE_SERVER}/random`)
     .then(function (response) {
       // handle success
       console.log(response.data);
