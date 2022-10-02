@@ -8,7 +8,7 @@ export default function Likes() {
 
     const dataContext = useContext(DataContext);
 
-    const { likedItemData, handleLikeMode } = dataContext || {};
+    const { likedItemData, handleLikeMode, handleTitle } = dataContext || {};
 
     const totalLikes = likedItemData.length;
 
@@ -17,6 +17,11 @@ export default function Likes() {
         setTimeout(delay, 0);
         return (clearTimeout(delay));        
     });
+
+    useEffect(() => {
+        const newTitle = "Likes - Astronomy";
+        handleTitle(newTitle);
+    }, [])
     
     return(
         <>

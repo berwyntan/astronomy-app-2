@@ -81,6 +81,9 @@ function App() {
 
   // to store data retrieved from airtable in string format
   const [airtableData, setAirtableData] = useState()
+
+  // to dynamically change document title
+  const [title, setTitle] = useState("Astronomy")
   
    
   // ------------------------------------ APIs -------------------------------------------
@@ -728,11 +731,20 @@ function App() {
     }    
   }
 
+  const handleTitle = (title) => {
+    setTitle(title);
+  }
+
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
   // useEffect(() => {callApiRandom()}, [])
   // useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
+
+  // set title of document on page change
+  useEffect(() => {document.title = title}, [title])
+
+  // upload data to airtable
   useEffect(() => updateLikesToAirtable(), [likedItemData])
   useEffect(() => updateAlbumsToAirtable(), [albumData])
 
@@ -912,6 +924,7 @@ function App() {
     updateAlbumsFromAirtable,
     callApiByDate,
     callApiRandom,
+    handleTitle,
   }
 
   

@@ -9,7 +9,7 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData, updateAlbumData, updateAlbumsToAirtable, handleAlbumsMode } = dataContext || {};
+    const { albumData, updateAlbumData, updateAlbumsToAirtable, handleAlbumsMode, handleTitle } = dataContext || {};
 
     const [isRenaming, setIsRenaming] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -32,7 +32,7 @@ export default function Album() {
         }
     }
 
-    console.log(album);
+    // console.log(album);
 
     const handleRename = (event) => {
         event.preventDefault();
@@ -97,13 +97,17 @@ export default function Album() {
             setTimeout(delay, 100);  
             
             return (clearTimeout(delay)); 
-        }
-        
-               
+        }      
     }, [albumData]);
 
+    // rename document title
+    useEffect(() => {
+        const newTitle = `${album?.name ? album.name : ""} - Astronomy`;
+        handleTitle(newTitle);
+    }, [])
+
     // console.log(albumData)
-    console.log("album rendered")
+    // console.log("album rendered")
     // console.log(albumIndex)  
     
     return(
@@ -149,8 +153,11 @@ export default function Album() {
             </div>           
                 <Container />
             </> :
-            // <h2>Album Not Found</h2>  
-            <Albums />
+            <>
+                <span className="mt-12 ml-10 text-xl absolute">Album does not exist</span>  
+                <Albums />
+            </>
+            
                      
    
         }

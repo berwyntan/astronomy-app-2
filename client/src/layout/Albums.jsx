@@ -7,7 +7,7 @@ export default function Albums() {
 
     const dataContext = useContext(DataContext);
     const { albumData, handleAddAlbumForm, updateAlbumForm, handleAlbumTab,
-        mode, handleAddNewAlbum, handleAlbumsMode, updateAlbumsToAirtable } = dataContext || {};
+        mode, handleAddNewAlbum, handleAlbumsMode, updateAlbumsToAirtable, handleTitle } = dataContext || {};
     // console.log(albumData)
     
     const numOfAlbums = albumData.albums.length;
@@ -49,6 +49,11 @@ export default function Albums() {
 
     // for deleting albums
     useEffect(() => {updateAlbumsToAirtable(); console.log("Albums component use effect triggered")}, []);
+
+    useEffect(() => {
+        const newTitle = "Albums - Astronomy";
+        handleTitle(newTitle);
+    }, [])
 
     return(
         

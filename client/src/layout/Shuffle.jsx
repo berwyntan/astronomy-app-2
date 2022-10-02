@@ -7,10 +7,16 @@ export default function Shuffle() {
     const dataContext = useContext(DataContext)
 
     const { 
-        callApiRandom, handleRandomView,
+        callApiRandom, handleRandomView, handleTitle
     } = dataContext || {}
 
     useEffect(() => {handleRandomView(); callApiRandom()}, []) 
+
+    useEffect(() => {
+        const newTitle = "Shuffle - Astronomy";
+        handleTitle(newTitle);
+    }, [])
+
     return(
         <>
             <Container />

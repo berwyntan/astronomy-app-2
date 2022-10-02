@@ -7,10 +7,15 @@ export default function Search() {
     const dataContext = useContext(DataContext)
 
     const { 
-        callApiByDate, searchDate, 
+        callApiByDate, searchDate, handleTitle
     } = dataContext || {}
 
     useEffect(() => {callApiByDate()}, [searchDate]) 
+
+    useEffect(() => {
+        const newTitle = "Search - Astronomy";
+        handleTitle(newTitle);
+    }, [])
 
     return(
         <>

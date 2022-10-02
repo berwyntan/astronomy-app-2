@@ -7,11 +7,16 @@ export default function Latest() {
     const dataContext = useContext(DataContext)
 
     const { 
-        callApiByDate, handleLatestView,
+        handleTitle, handleLatestView,
     } = dataContext || {}
 
     useEffect(() => {handleLatestView()}, []) 
-    
+
+    useEffect(() => {
+        const newTitle = "Latest - Astronomy";
+        handleTitle(newTitle);
+    }, [])
+
     return(
         <>
             <Container />
