@@ -13,7 +13,7 @@ export default function Navbar() {
     } = dataContext || {}
 
     return (
-        <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-40">
+        <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-50">
             <div className="flex-1">
                 <span 
                     className="btn btn-ghost normal-case text-lg"
@@ -47,7 +47,7 @@ export default function Navbar() {
                 <span className={`tab tab-bordered ${feedView && "tab-active"}`} onClick={handleFeedView}>Feed</span>
                 <span className={`tab tab-bordered ${feedView || "tab-active"}`} onClick={handleGridView}>Grid</span>
                 
-                <Link to="/search">
+                {/* <Link to="/search"> */}
                     <span className={`tab tab-bordered ${mode.search && "tab-active"}`} onClick={handleDatePicker}>
                         Search
                     </span>
@@ -56,7 +56,7 @@ export default function Navbar() {
                         searchDate={searchDate}
                         />
                     }
-                </Link>                
+                {/* </Link>                 */}
             
                 <Link to="/likes">
                     <span 

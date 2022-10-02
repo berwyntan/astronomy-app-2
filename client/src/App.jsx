@@ -1,11 +1,12 @@
 import { useState, useEffect, createContext } from 'react'
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Likes from './layout/Likes'
 import Layout from './layout/Layout'
 import Container from './components/Container'
 import Albums from './layout/Albums'
 import Album from './layout/Album'
+import Search from './layout/Search'
 
 import data from './data/sampleData'
 
@@ -77,6 +78,7 @@ function App() {
 
   // to store data retrieved from airtable in string format
   const [airtableData, setAirtableData] = useState()
+  
    
   // ------------------------------------ APIs -------------------------------------------
 
@@ -373,6 +375,7 @@ function App() {
       isAtAlbumsTab: false,
     }))
     setItemData([]);
+    
   }
 
   // gets the id of last interacted card element so window can scroll to element when switching view
@@ -899,7 +902,8 @@ function App() {
     handleAlbumTab,
     updateAlbumsToAirtable,
     updateLikesFromAirtable,
-    updateAlbumsFromAirtable
+    updateAlbumsFromAirtable,
+    callApiByDate,
   }
 
   
@@ -907,13 +911,17 @@ function App() {
     <DataContext.Provider value={data}>
     <BrowserRouter>
       <Routes> 
+        <Route path="/search" element={<Layout />}>
+          <Route index element={<Search />} />
+        </Route> 
         <Route path="/likes" element={<Layout />}>
           <Route index element={<Likes />} />
         </Route> 
         <Route path="/albums" element={<Layout />}>
           <Route index element={<Albums />} />
           <Route path=":albumroute" element={<Album />} />
-        </Route>        
+        </Route>  
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
