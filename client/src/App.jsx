@@ -150,7 +150,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16`)
+    axios.get(`http://localhost:5000/random`)
     .then(function (response) {
       // handle success
       console.log(response.data);
@@ -165,6 +165,21 @@ function App() {
         isLoading: false,
       }))
     })
+    // axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16`)
+    // .then(function (response) {
+    //   // handle success
+    //   console.log(response.data);
+    //   setItemData(prevData => (
+    //     [
+    //       ...prevData,
+    //       ...response.data
+    //     ]
+    //   ))
+    //   setMode(prevState => ({
+    //     ...prevState,
+    //     isLoading: false,
+    //   }))
+    // })
     .catch(function (error) {
       // handle error
       console.log(error);
