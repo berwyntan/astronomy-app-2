@@ -5,6 +5,9 @@ const connectDB = require('./config/dbConnect');
 const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 // routes
 app.get("/", (req, res) => {
