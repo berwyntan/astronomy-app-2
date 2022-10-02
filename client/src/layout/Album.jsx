@@ -9,7 +9,7 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData, updateAlbumData, updateAlbumsToAirtable } = dataContext || {};
+    const { albumData, updateAlbumData, updateAlbumsToAirtable, handleAlbumsMode } = dataContext || {};
 
     const [isRenaming, setIsRenaming] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -32,7 +32,7 @@ export default function Album() {
         }
     }
 
-    
+    console.log(album);
 
     const handleRename = (event) => {
         event.preventDefault();
@@ -88,6 +88,19 @@ export default function Album() {
     // use effect for renaming albums
     useEffect(() => {updateAlbumsToAirtable();}, []);
     // useEffect(() => {updateAlbumsToAirtable();}, [isDeleting]);
+
+    // set albums mode
+    useEffect(() => {
+        const itemData = album?.data;
+        if (itemData) {
+            const delay = () => setTimeout(() => handleAlbumsMode(itemData), 0);        
+            setTimeout(delay, 100);  
+            
+            return (clearTimeout(delay)); 
+        }
+        
+               
+    }, [albumData]);
 
     // console.log(albumData)
     console.log("album rendered")

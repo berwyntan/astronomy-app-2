@@ -391,6 +391,7 @@ function App() {
       search: false,
       saves: true,
       albums: false,
+      isLoading: false,
       isAtAlbumsTab: false,
     }))
 
@@ -509,6 +510,7 @@ function App() {
       search: false,
       saves: true,
       albums: true,
+      isLoading: false,
       isAtAlbumsTab: true,
     }))
     setDateStringForApi({  
@@ -719,7 +721,7 @@ function App() {
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
   // useEffect(() => {callApiRandom()}, [])
-  useEffect(() => {callApiByDate()}, [searchDate]) 
+  // useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
   useEffect(() => updateLikesToAirtable(), [likedItemData])
   useEffect(() => updateAlbumsToAirtable(), [albumData])
@@ -907,14 +909,18 @@ function App() {
       <Routes> 
         <Route path="/likes" element={<Layout />}>
           <Route index element={<Likes />} />
-        </Route>       
+        </Route> 
+        <Route path="/albums" element={<Layout />}>
+          <Route index element={<Albums />} />
+          <Route path=":albumroute" element={<Album />} />
+        </Route>        
         <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
           <Route path="search" element={<Container />} />
           {/* <Route path="likes" element={<Likes />} /> */}
-          <Route path="albums" element={<Albums />} />
-          <Route path="/:albumroute" element={<Album />} />    
+          {/* <Route path="albums" element={<Albums />} /> */}
+              
         </Route>
         
         <Route path="*" element="NOT FOUND" />

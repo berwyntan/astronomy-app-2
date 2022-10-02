@@ -6,7 +6,7 @@ import AlbumCover from '../components/AlbumCover'
 export default function Albums() {
 
     const dataContext = useContext(DataContext);
-    const { albumData, handleAddAlbumForm, updateAlbumForm, 
+    const { albumData, handleAddAlbumForm, updateAlbumForm, handleAlbumTab,
         mode, handleAddNewAlbum, handleAlbumsMode, updateAlbumsToAirtable } = dataContext || {};
     // console.log(albumData)
     
@@ -25,7 +25,7 @@ export default function Albums() {
             url = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
         } else {
             url = album.data?.[0].url;
-        }               
+        }  
         
         return(
             <AlbumCover
@@ -39,6 +39,13 @@ export default function Albums() {
             />
         )
     })
+
+    // set albumTab mode
+    useEffect(() => {
+        const delay = () => setTimeout(handleAlbumTab(), 0);
+        setTimeout(delay, 0);
+        return (clearTimeout(delay));        
+    }, []);
 
     // for deleting albums
     useEffect(() => {updateAlbumsToAirtable(); console.log("Albums component use effect triggered")}, []);

@@ -14,7 +14,7 @@ export default function AlbumCover({
     return(
         
         <div className="flex flex-col items-start">
-            <Link to={`/${route}`}>
+            <Link to={`/albums/${route}`}>
             <img 
                 className="rounded-lg object-cover h-60 mx-auto cursor-pointer lozadr" 
                 src={url} 
