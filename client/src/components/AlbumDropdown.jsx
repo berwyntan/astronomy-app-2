@@ -8,31 +8,38 @@ import bookmarkSolid from "../icons/bookmark-solid.svg"
 
 export default function AlbumDropdown({ bookmark, item }) {
 
+    const { isAuth } = useAuth();
+
     const dataContext = useContext(DataContext);
 
     const { albumData, handleBookmark } = dataContext || {};
 
-    const albumNames = albumData.albums.map((album, index) => {
-        
-        const found = album.data.find(info => info.date === item.date)        
+    let albumNames;
 
-        return (            
-            <li key={index}>
-                <a onClick={() => handleBookmark(album, item, found)}>
-                    {album.name}
-                    {
-                    found ?
-                    <img className='h-4 dark:invert' src={bookmarkSolid} /> :
-                    <img className='h-4 dark:invert' src={bookmarkEmpty} />
-                    }                    
-                </a>
-            </li>          
-        )
-    })
+    if (isAuth) {
+        albumNames = albumData.albums.map((album, index) => {
+        
+            const found = album.data.find(info => info.date === item.date)        
+    
+            return (            
+                <li key={index}>
+                    <a onClick={() => handleBookmark(album, item, found)}>
+                        {album.name}
+                        {
+                        found ?
+                        <img className='h-4 dark:invert' src={bookmarkSolid} /> :
+                        <img className='h-4 dark:invert' src={bookmarkEmpty} />
+                        }                    
+                    </a>
+                </li>          
+            )
+        })
+    } else albumNames = "";
+    
 
     const numOfAlbums = albumData.albums.length
 
-    const { isAuth } = useAuth();
+    
 
     return(
         <div className="dropdown dropdown-right">
