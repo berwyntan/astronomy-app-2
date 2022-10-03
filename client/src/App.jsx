@@ -10,6 +10,8 @@ import Search from './layout/Search'
 import Shuffle from './layout/Shuffle'
 import Latest from './layout/Latest'
 import NotFound from './layout/NotFound'
+import RequireAuth from './components/RequireAuth'
+import Login from './layout/Login'
 
 import data from './data/sampleData'
 
@@ -22,6 +24,8 @@ import { debounce } from 'lodash'
 import Airtable from 'airtable'
 
 export const DataContext = createContext();
+export const AuthContext = createContext();
+
 
 
 Airtable.configure({ 
@@ -34,6 +38,7 @@ let base = Airtable.base('appQerk9R1FpDeKEX');
 function App() {
   
   // ------------------- STATES ------------------------------------------------
+  // ----------------- DATA ---------------------------------------------------
   // state to store the photos/title/text etc to be rendered
   const [itemData, setItemData] = useState([])   
   
@@ -85,6 +90,11 @@ function App() {
 
   // to dynamically change document title
   const [title, setTitle] = useState("Astronomy")
+
+  // ---------------------------- AUTH -------------------------------------------
+
+  // check if user is logged in
+  const [isAuth, setIsAuth] = useState(false)
   
    
   // ------------------------------------ APIs -------------------------------------------
@@ -209,6 +219,10 @@ function App() {
   // --------------------------- HANDLERS ------------------------------------------------
   // add or remove saves from likedItemData
   const handleLike = (item) => {
+
+    if (!isAuth) {      
+      return;
+    }
     
     const likedDates = likedItemData.map(item => item.date)
     
@@ -243,6 +257,10 @@ function App() {
     // if (coin > 80) {
     //   updateLikesToAirtable();
     // }
+
+    if (!isAuth) {      
+      return;
+    }
 
     let like = false
     for (let i=0; i<likedItemData.length; i++) {
@@ -530,6 +548,10 @@ function App() {
     //   updateAlbumsToAirtable();
     // }
 
+    if (!isAuth) {      
+      return;
+    }
+
     let bookmark = false;
     const numOfAlbums = albumData.albums.length;
     for (let i=0; i<numOfAlbums; i++) {
@@ -568,10 +590,10 @@ function App() {
   // add/remove item from album
   const handleBookmark = (album, item, found) => {
     
-    // if (mode.saves) {
-    //   setItemData([])
-      // setItemData(changedAlbumData)
-    // }
+    if (!isAuth) {      
+      return;
+    }
+
     let changedAlbum = album;
     let changedAlbumData;
     
@@ -958,36 +980,47 @@ function App() {
     handleTitle,
   }
 
+  const auth = {
+    isAuth,
+  }
+
   
   return (
     <DataContext.Provider value={data}>
+    <AuthContext.Provider value={auth}>
     <BrowserRouter>
       <Routes> 
+
+        <Route path="/login" element={<Layout />}>
+          <Route index element={<Login />} />
+        </Route>
         <Route path="/shuffle" element={<Layout />}>
           <Route index element={<Shuffle />} />
         </Route> 
         <Route path="/search" element={<Layout />}>
           <Route index element={<Search />} />
         </Route> 
-        <Route path="/likes" element={<Layout />}>
-          <Route index element={<Likes />} />
-        </Route> 
-        <Route path="/albums" element={<Layout />}>
-          <Route index element={<Albums />} />
-          <Route path=":albumroute" element={<Album />} />
-        </Route>   
         <Route path="/latest" element={<Layout />}>
           <Route index element={<Latest />} />
         </Route>        
         <Route path="/" element={<Layout />}>
           <Route index element={<Latest />} />
           <Route path="*" element={<NotFound />} />
-        </Route>        
-        {/* <Route path="*" element={<Layout />}>
-          <NotFound />
-        </Route> */}
+        </Route> 
+
+        <Route element={<RequireAuth />}>
+          <Route path="/likes" element={<Layout />}>
+            <Route index element={<Likes />} />
+          </Route> 
+          <Route path="/albums" element={<Layout />}>
+            <Route index element={<Albums />} />
+            <Route path=":albumroute" element={<Album />} />
+          </Route> 
+        </Route>         
+        
       </Routes>
     </BrowserRouter>
+    </AuthContext.Provider>
     </DataContext.Provider>
   )
 }

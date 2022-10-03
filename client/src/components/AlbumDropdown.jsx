@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { DataContext } from '../App'
+import useAuth from '../../hooks/useAuth';
 
 import bookmarkEmpty from "../icons/bookmark-empty.svg"
 import bookmarkSolid from "../icons/bookmark-solid.svg"
@@ -31,6 +32,8 @@ export default function AlbumDropdown({ bookmark, item }) {
 
     const numOfAlbums = albumData.albums.length
 
+    const { isAuth } = useAuth();
+
     return(
         <div className="dropdown dropdown-right">
             <label tabIndex={0}>
@@ -43,10 +46,15 @@ export default function AlbumDropdown({ bookmark, item }) {
                     </button>            
                 }
             </label>
-                <ul tabIndex={0} className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-40">
+                {
+                    isAuth
+                    &&  
+                    <ul tabIndex={0} className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-40">
                     {albumNames}    
                     { numOfAlbums > 0 || <li><Link to="/albums">Add an album</Link></li> }
-                </ul>
+                    </ul>                    
+                }
+                
         </div>
             
         
