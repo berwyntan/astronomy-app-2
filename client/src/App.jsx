@@ -216,6 +216,21 @@ function App() {
     });
   }
 
+  const authGoogle = () => {
+    
+    axios.get(`${import.meta.env.VITE_SERVER}/auth/google`)
+    .then((response) => {
+      console.log(response);
+      setIsAuth(true);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+        
+    
+}
+
   // --------------------------- HANDLERS ------------------------------------------------
   // add or remove saves from likedItemData
   const handleLike = (item) => {
@@ -982,6 +997,7 @@ function App() {
 
   const auth = {
     isAuth,
+    authGoogle,
   }
 
   

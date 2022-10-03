@@ -5,12 +5,18 @@ const connectDB = require('./config/dbConnect');
 const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
-const cookieParser = require('cookie-parser');
+
+const cookieSession = require("cookie-session");
 const session = require('express-session');
 const passport = require('passport');
+const User = require('./model/User');
+require("./passport");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+
+
 
 // connect to mongoDB
 connectDB();
@@ -20,15 +26,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
-app.use(cookieParser());
+app.use(cookieSession(
+    {
+        name: "session",
+        keys: ["keyboardcat"],
+        maxAge: 24 * 60 * 60 * 100
+    }
+))
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/random', require('./routes/random'));
+app.use('/latest', require('./routes/latest'));
+app.use('/auth', require('./routes/auth'));
 
 // routes
 app.get("/", (req, res) => {
     res.json({ message: "hello world" })
 });
-
-app.use('/random', require('./routes/random'));
-app.use('/latest', require('./routes/latest'));
 
 
 mongoose.connection.once('open', () => {
