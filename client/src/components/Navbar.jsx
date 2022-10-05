@@ -1,6 +1,8 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { DataContext } from '../App'
 import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth";
+
 import Calendar from "./Calendar"
 
 export default function Navbar() {
@@ -12,43 +14,39 @@ export default function Navbar() {
         handleAlbumsMode, feedView, handleAlbumTab
     } = dataContext || {}
 
+    const { isAuth, setIsAuth } = useAuth();
+
+    const handleLogout = () => {
+        setIsAuth(false);
+    }
+
     return (
         <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-50">
             <div className="flex-1">
                 <span 
-                    className="btn btn-ghost normal-case text-lg"
+                    className="hidden sm:btn sm:btn-ghost sm:normal-case sm:text-base"
                     onClick={handleScrollToTop}>
                         Astronomy
                 </span>
-                {/* <div class="dropdown hover:bg-slate-900/25">
-                    <div className="flex items-center">
-                        <label tabindex="0" class="btn btn-ghost rounded-btn">   
-                        <img class="h-5 ml-4 invert" src={caretDown} />
-                        </label>
-                    </div>
-                    <ul tabindex="0" class="menu dropdown-content p-1 shadow bg-slate-900 text-slate-50 rounded-box w-52 mt-1">
-                        <li><a>Latest photos</a></li> 
-                        <li><a>Random photos</a></li>
-                    </ul>
-                </div> */}
             </div>
-            <div className="tabs">
-                {/* <ul className="menu menu-horizontal p-0"> */}
+
+            <div className="tabs flex items-center">           
+                
                 <Link to="/">
-                    <span className={`tab tab-bordered ${mode.latest && "tab-active"}`} onClick={handleLatestView}>
+                    <span className={`tab tab-sm tab-bordered ${mode.latest && "tab-active"}`} onClick={handleLatestView}>
                         Latest
                     </span>
                 </Link>
                 <Link to="/shuffle">
-                    <span className={`tab tab-bordered ${mode.random && "tab-active"}`} onClick={handleRandomView}>
+                    <span className={`tab tab-sm tab-bordered ${mode.random && "tab-active"}`} onClick={handleRandomView}>
                         Shuffle
                     </span>
                 </Link>
-                <span className={`tab tab-bordered ${feedView && "tab-active"}`} onClick={handleFeedView}>Feed</span>
-                <span className={`tab tab-bordered ${feedView || "tab-active"}`} onClick={handleGridView}>Grid</span>
+                <span className={`tab tab-sm tab-bordered ${feedView && "tab-active"}`} onClick={handleFeedView}>Feed</span>
+                <span className={`tab tab-sm tab-bordered ${feedView || "tab-active"}`} onClick={handleGridView}>Grid</span>
                 
                 {/* <Link to="/search"> */}
-                    <span className={`tab tab-bordered ${mode.search && "tab-active"}`} onClick={handleDatePicker}>
+                    <span className={`tab tab-sm tab-bordered ${mode.search && "tab-active"}`} onClick={handleDatePicker}>
                         Search
                     </span>
                     {mode?.isSearching && <Calendar 
@@ -60,7 +58,7 @@ export default function Navbar() {
             
                 <Link to="/likes">
                     <span 
-                        className={`tab tab-bordered ${mode.saves && mode.isAtAlbumsTab===false && "tab-active"}`} 
+                        className={`tab tab-sm tab-bordered ${mode.saves && mode.isAtAlbumsTab===false && "tab-active"}`} 
                         onClick={handleLikeMode}
                     >
                         Likes
@@ -69,12 +67,60 @@ export default function Navbar() {
                 
                 <Link to="/albums">
                     <span 
-                        className={`tab tab-bordered ${mode.isAtAlbumsTab && "tab-active"}`} 
+                        className={`tab tab-sm tab-bordered ${mode.isAtAlbumsTab && "tab-active"}`} 
                         onClick={handleAlbumTab}
                     >
                         Albums
                     </span>
                 </Link>
+                {
+                    isAuth
+                    ? 
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="w-8 rounded-full">
+                            <img src="https://placeimg.com/80/80/people" />
+                            </div>
+                        </label>
+                        <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                            {/* <li>
+                            <a className="justify-between">
+                                Profile
+                                <span className="badge">New</span>
+                            </a>
+                            </li>
+                            <li><a>Settings</a></li> */}
+                            <li className='ml-4'>Your name</li>
+                            {/* <li>
+                                <Link to="/likes">
+                                    <span 
+                                        // className={`tab tab-sm tab-bordered ${mode.saves && mode.isAtAlbumsTab===false && "tab-active"}`} 
+                                        onClick={handleLikeMode}
+                                    >
+                                        Likes
+                                    </span>
+                                </Link>         
+                            </li>
+                            
+                            <li>
+                                <Link to="/albums">
+                                    <span 
+                                        // className={`tab tab-sm tab-bordered ${mode.isAtAlbumsTab && "tab-active"}`} 
+                                        onClick={handleAlbumTab}
+                                    >
+                                        Albums
+                                    </span>
+                                </Link>
+                            </li> */}
+                            <li><a onClick={handleLogout}>Logout</a></li>
+                        </ul>
+                    </div>
+                    : <Link to="/login">
+                            <span className={`tab tab-sm tab-bordered`} >
+                                Login
+                            </span>
+                        </Link>
+                }               
                 
                 
             </div>            

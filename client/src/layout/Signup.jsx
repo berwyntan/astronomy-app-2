@@ -2,29 +2,43 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login () {
 
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     const authGoogle = () => {
         window.open(`${import.meta.env.VITE_SERVER}/auth/google`)
     };
 
-    const { handleLogin } = useAuth();
+    const navigate = useNavigate();
+
+    const { setIsAuth } = useAuth();
 
     const handleUserName = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
+        setUserName(event.target.value);
     }
 
     const handlePassword = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
+        setPassword(event.target.value);
     }
 
     const handleShowPassword = (event) => {
         event.preventDefault();
         setShowPassword(prev => !prev);
+    }
+
+    const handleSignup = (event) => {
+        event.preventDefault();
+        setUserName("");
+        setPassword("")
+        setIsAuth(true);
+        navigate("/")
     }
 
     return(
@@ -33,14 +47,18 @@ export default function Login () {
         //     <button className="btn" onClick={authGoogle}>Login with Google</button>
         // </div>
         <div className="mt-36">
-        <form className="flex flex-col ml-10">
-            <h1 className="ml-6 mb-6 text-lg font-semibold">LOGIN</h1>
+        <form className="flex flex-col ml-10" onSubmit={handleSignup}>
+
+            <h1 className="ml-6 mb-6 text-lg font-semibold">SIGN UP</h1>
+
             <input type="text" placeholder="username" 
-                className="input input-bordered w-full max-w-xs mb-4" onChange={handleUserName}/>
+                className="input input-bordered w-full max-w-xs mb-4" onChange={handleUserName}
+                value={userName} autoComplete="on" required/>
+
             <div className="flex">
                 <input type={showPassword ? "text" : "password"} placeholder="password" 
                     className="input input-bordered w-full max-w-xs" onChange={handlePassword}
-                    autoComplete="off"/>
+                    value={password} autoComplete="off" required/>
                 <div>{showPassword
                     ? <button className="btn btn-square btn-ghost dark:invert" onClick={handleShowPassword}>
                         <img className="h-5" src={eyeSlash} />
@@ -48,16 +66,17 @@ export default function Login () {
                     : <button className="btn btn-square btn-ghost dark:invert" onClick={handleShowPassword}>
                         <img className="h-5" src={eye} />
                         </button>
-                }</div>
+                }</div>                
             </div>
-            <button type="submit" className="btn w-full max-w-xs mt-4" onClick={() => handleLogin(event)}>LOG IN</button>
+
+            <button type="submit" className="btn w-full max-w-xs mt-4" 
+                >SIGN UP</button>
             <div className="ml-6 mt-4">
-                Don't have an account? <Link to="/" className="link link-primary">Create one.</Link>
+                Have an account? <Link to="/login" className="link link-primary">Log in.</Link>
             </div>
             
         </form>
-        </div>
-        
+        </div>      
         
         
     )

@@ -12,6 +12,7 @@ import Latest from './layout/Latest'
 import NotFound from './layout/NotFound'
 import RequireAuth from './components/RequireAuth'
 import Login from './layout/Login'
+import Signup from './layout/Signup'
 
 import data from './data/sampleData'
 
@@ -94,7 +95,7 @@ function App() {
   // ---------------------------- AUTH -------------------------------------------
 
   // check if user is logged in
-  const [isAuth, setIsAuth] = useState(null)
+  const [isAuth, setIsAuth] = useState(false)
   
    
   // ------------------------------------ APIs -------------------------------------------
@@ -823,10 +824,15 @@ function App() {
     setTitle(title);
   }
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    console.log("logging in...")
-  }
+  // const handleLogin = (event) => {
+  //   event.preventDefault();
+  //   console.log("logging in...")
+  // }
+
+  // const handleSignup = (event) => {
+  //   event.preventDefault();
+  //   console.log("signing up...")
+  // }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
@@ -964,7 +970,7 @@ function App() {
     });    
   }, [])
 
-  useEffect(() => {getUser()}, [])
+  // useEffect(() => {getUser()}, [])
 
   // --------------------------------------- CONSOLE LOG ----------------------------
   // console.log(itemData)
@@ -1023,7 +1029,9 @@ function App() {
   const auth = {
     isAuth,
     // authGoogle,
-    handleLogin,
+    // handleLogin,
+    // handleSignup
+    setIsAuth,
   }
 
   
@@ -1032,7 +1040,9 @@ function App() {
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
       <Routes> 
-
+        <Route path="/signup" element={<Layout />}>
+          <Route index element={<Signup />} />
+        </Route>
         <Route path="/login" element={<Layout />}>
           <Route index element={<Login />} />
         </Route>
