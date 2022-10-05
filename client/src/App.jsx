@@ -94,7 +94,7 @@ function App() {
   // ---------------------------- AUTH -------------------------------------------
 
   // check if user is logged in
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(null)
   
    
   // ------------------------------------ APIs -------------------------------------------
@@ -216,20 +216,40 @@ function App() {
     });
   }
 
-  const authGoogle = () => {
+//   const authGoogle = () => {
     
-    axios.get(`${import.meta.env.VITE_SERVER}/auth/google`)
-    .then((response) => {
-      console.log(response);
-      setIsAuth(true);
+//     axios.get(`${import.meta.env.VITE_SERVER}/auth/google`, {
+//       withCredentials: true,
+//     })
+//     .then((response) => {
+//       console.log(response);
+//       setIsAuth(true);
+//     })
+//     .catch(function (error) {
+//       // handle error
+//       console.log(error);
+//     })       
+    
+// }
+
+  // getUser
+  const getUser = () => {
+    axios.get(`${import.meta.env.VITE_SERVER}/auth/login/success`)
+    .then(function (response) {
+      console.log(response)
+      if (response.status === 200) return response.json();
+      throw new Error("authentication has failed");
     })
+    .then((resObject) => {
+      console.log(resObject)
+      console.log("user preferneces loaded")
+      setIsAuth(resObject.user);
+    })    
     .catch(function (error) {
       // handle error
       console.log(error);
-    })
-        
-    
-}
+    });
+  }
 
   // --------------------------- HANDLERS ------------------------------------------------
   // add or remove saves from likedItemData
@@ -803,6 +823,11 @@ function App() {
     setTitle(title);
   }
 
+  const handleLogin = (event) => {
+    event.preventDefault();
+    console.log("logging in...")
+  }
+
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
   // useEffect(() => {callApiRandom()}, [])
@@ -935,11 +960,11 @@ function App() {
         } catch { return; }
   
     }, function done(err) {
-        if (err) { console.error(err); return; }
-                
-    });
-    
+        if (err) { console.error(err); return; }                
+    });    
   }, [])
+
+  useEffect(() => {getUser()}, [])
 
   // --------------------------------------- CONSOLE LOG ----------------------------
   // console.log(itemData)
@@ -997,7 +1022,8 @@ function App() {
 
   const auth = {
     isAuth,
-    authGoogle,
+    // authGoogle,
+    handleLogin,
   }
 
   

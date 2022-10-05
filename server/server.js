@@ -8,6 +8,7 @@ const corsOptions = require('./config/corsOptions');
 
 const cookieSession = require("cookie-session");
 const session = require('express-session');
+const sessionOptions = require('./session');
 const passport = require('passport');
 const User = require('./model/User');
 require("./passport");
@@ -22,17 +23,20 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cors(corsOptions));
 app.use(cookieSession(
     {
         name: "session",
         keys: ["keyboardcat"],
         maxAge: 24 * 60 * 60 * 100
     }
-))
+));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(cors(corsOptions));
+
+app.use(session(sessionOptions));    
+
 app.use(passport.initialize());
 app.use(passport.session());
 

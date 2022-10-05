@@ -11,7 +11,7 @@ router.get("/login/success", (req, res) => {
             // cookies: req.cookies,
             // jwt: jwt
         })
-    }    
+    } else return res.send("no user") 
 });
 
 router.get("/login/failed", (req, res) => {

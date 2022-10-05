@@ -10,8 +10,8 @@ function Layout() {
     <>
       <Navbar/> 
       { !isAuth && 
-      <div className="top-14  bg-slate-50 dark:bg-slate-800 fixed z-50 w-auto">
-        LOG IN TO LIKE AND SAVE POSTS
+      <div className="top-14  bg-slate-50 dark:bg-slate-800 fixed z-50 w-full">
+        <p className="ml-20">LOG IN TO LIKE AND SAVE POSTS</p>
       </div> }
       <Outlet /> 
     </>

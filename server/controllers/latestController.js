@@ -3,7 +3,7 @@ const axios = require('axios');
 const getLatest = async (req, res) => {
     const start_date = req.query.start_date;
     const end_date = req.query.end_date;
-    console.log(start_date);
+    // console.log(start_date);
     try {
         const response = await axios.get(`https://api.nasa.gov/planetary/apod` , {
             params: {
