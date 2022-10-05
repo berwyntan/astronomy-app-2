@@ -12,6 +12,9 @@ const sessionOptions = require('./session');
 const passport = require('passport');
 const User = require('./model/User');
 require("./passport");
+const credentials = require('./middleware/credentials');
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,32 +26,35 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // middleware
-app.use(cookieSession(
-    {
-        name: "session",
-        keys: ["keyboardcat"],
-        maxAge: 24 * 60 * 60 * 100
-    }
-));
+app.use(credentials);
+// app.use(cookieSession(
+//     {
+//         name: "session",
+//         keys: ["keyboardcat"],
+//         maxAge: 24 * 60 * 60 * 100
+//     }
+// ));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 
-app.use(session(sessionOptions));    
+// app.use(session(sessionOptions));    
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use('/random', require('./routes/random'));
 app.use('/latest', require('./routes/latest'));
+app.use('/signup', require('./routes/signup'));
 app.use('/auth', require('./routes/auth'));
 
 // routes
 app.get("/", (req, res) => {
     res.json({ message: "hello world" })
 });
-
+app.use(verifyJWT);
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');

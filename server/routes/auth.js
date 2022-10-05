@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const authController = require('../controllers/authController');
 
+router.post('/', authController.handleLogin);
 
 router.get("/login/success", (req, res) => {
     if (req.user) {
@@ -29,5 +31,7 @@ router.get("/google/callback", passport.authenticate("google", {
     successRedirect: process.env.CLIENT_URL,
     failureRedirect: "/login/failed"
 }))
+
+
 
 module.exports = router

@@ -14,7 +14,7 @@ export default function Navbar() {
         handleAlbumsMode, feedView, handleAlbumTab
     } = dataContext || {}
 
-    const { isAuth, setIsAuth } = useAuth();
+    const { isAuth, setIsAuth, authDetails } = useAuth();
 
     const handleLogout = () => {
         setIsAuth(false);
@@ -30,7 +30,7 @@ export default function Navbar() {
                 </span>
             </div>
 
-            <div className="tabs flex items-center">           
+            <div className="tabs flex items-baseline">           
                 
                 <Link to="/">
                     <span className={`tab tab-sm tab-bordered ${mode.latest && "tab-active"}`} onClick={handleLatestView}>
@@ -42,6 +42,7 @@ export default function Navbar() {
                         Shuffle
                     </span>
                 </Link>
+                
                 <span className={`tab tab-sm tab-bordered ${feedView && "tab-active"}`} onClick={handleFeedView}>Feed</span>
                 <span className={`tab tab-sm tab-bordered ${feedView || "tab-active"}`} onClick={handleGridView}>Grid</span>
                 
@@ -90,7 +91,7 @@ export default function Navbar() {
                             </a>
                             </li>
                             <li><a>Settings</a></li> */}
-                            <li className='ml-4'>Your name</li>
+                            <li className='ml-4 font-semibold'>{authDetails.userName}</li>
                             {/* <li>
                                 <Link to="/likes">
                                     <span 

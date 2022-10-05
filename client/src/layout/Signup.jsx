@@ -3,6 +3,7 @@ import { useState } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login () {
 
@@ -16,7 +17,7 @@ export default function Login () {
 
     const navigate = useNavigate();
 
-    const { setIsAuth } = useAuth();
+    const { setIsAuth, setAuthDetails } = useAuth();
 
     const handleUserName = (event) => {
         // console.log(event.target.value);
@@ -33,12 +34,33 @@ export default function Login () {
         setShowPassword(prev => !prev);
     }
 
-    const handleSignup = (event) => {
+    const handleSignup = async (event) => {
         event.preventDefault();
-        setUserName("");
-        setPassword("")
-        setIsAuth(true);
-        navigate("/")
+
+        try {
+
+            const response = await axios.post(`${import.meta.env.VITE_SERVER}/signup`, 
+                JSON.stringify({ 
+                    user: userName,
+                    pwd: password
+                }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            console.log(JSON.stringify(response?.data));
+            console.log(JSON.stringify(response));
+            setAuthDetails({ userName, password });
+            setUserName("");
+            setPassword("")
+            setIsAuth(true);
+            navigate("/")
+        } catch (error) {
+            
+        }
+
+        
     }
 
     return(

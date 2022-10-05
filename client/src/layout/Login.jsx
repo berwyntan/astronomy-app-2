@@ -1,20 +1,22 @@
 import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function Login () {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const authGoogle = () => {
-        window.open(`${import.meta.env.VITE_SERVER}/auth/google`)
+        window.open(`${import.meta.env.VITE_SERVER}/auth/google`, "_self")
     };
 
-    const { setIsAuth } = useAuth();
+    const { setIsAuth, setAuthDetails } = useAuth();
 
     const navigate = useNavigate();
 
@@ -33,13 +35,49 @@ export default function Login () {
         setShowPassword(prev => !prev);
     }
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
+        
         event.preventDefault();
-        setUserName("");
-        setPassword("")
-        setIsAuth(true);
-        navigate("/")
+
+        try {
+
+            const response = await axios.post(`${import.meta.env.VITE_SERVER}/auth`, 
+                JSON.stringify({ 
+                    user: userName,
+                    pwd: password
+                }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            // console.log(JSON.stringify(response?.data));
+            console.log(JSON.stringify(response.data));
+            const accessToken = response?.data?.accessToken;
+            console.log(accessToken)
+            
+            setAuthDetails({ userName, password, accessToken});
+            setUserName("");
+            setPassword("");
+            setIsAuth(true);
+            navigate("/")
+        } catch (err) {
+            if (!err?.response) {
+                setErrorMsg("No Server Response");
+            } else if (err.response?.status === 400) {
+                setErrorMsg("Missing Username or Password");
+            } else if (err.response?.status === 401) {
+                setErrorMsg("Incorrect Username or Password");
+            } else {
+                setErrorMsg("Login Failed");
+            }
+        }        
     }
+
+    // clear err msg when user retypes form
+    useEffect(() => {
+        setErrorMsg("");
+    }, [userName, password])
 
     return(
                 
@@ -50,7 +88,7 @@ export default function Login () {
 
         <form className="flex flex-col ml-10" onSubmit={handleLogin}>
 
-            <h1 className="ml-6 mb-6 text-lg font-semibold">LOGIN</h1>
+            <h1 className="ml-6 mb-6 text-xl font-semibold">LOGIN</h1>
 
             <input type="text" placeholder="username" 
                 className="input input-bordered w-full max-w-xs mb-4" onChange={handleUserName}
@@ -70,12 +108,20 @@ export default function Login () {
                 }</div>
             </div>
 
-            <button type="submit" className="btn w-full max-w-xs mt-4" onClick={handleLogin}>LOG IN</button>
+            <button type="submit" className="btn w-full max-w-xs mt-4 mb-2">LOG IN</button>
+            <p className="text-red-600 text-sm">{errorMsg}</p>
             <div className="ml-6 mt-4">
                 Don't have an account? <Link to="/signup" className="link link-primary">Create one.</Link>
             </div>
             
         </form>
+
+        {/* <div className="w-full max-w-xs mt-4 ml-10">
+            <div className="divider">OR</div> 
+            <button className="btn w-full max-w-xs mt-2" onClick={authGoogle}>LOG IN W GOOGLE</button>
+        </div>         */}
+        
+
         </div>
         
         

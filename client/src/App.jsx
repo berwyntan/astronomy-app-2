@@ -96,7 +96,8 @@ function App() {
 
   // check if user is logged in
   const [isAuth, setIsAuth] = useState(false)
-  
+  // user details
+  const [authDetails, setAuthDetails] = useState({})
    
   // ------------------------------------ APIs -------------------------------------------
 
@@ -1027,11 +1028,10 @@ function App() {
   }
 
   const auth = {
-    isAuth,
-    // authGoogle,
-    // handleLogin,
-    // handleSignup
+    isAuth,    
     setIsAuth,
+    authDetails,
+    setAuthDetails
   }
 
   

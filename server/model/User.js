@@ -9,7 +9,7 @@ const userSchema = new Schema({
     displayName: String,
     profilePhoto: String,
     
-    accessToken: String,
+    refreshToken: String,
 
     likes: String,
     albums: String
