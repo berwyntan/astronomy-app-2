@@ -97,7 +97,11 @@ function App() {
   // check if user is logged in
   const [isAuth, setIsAuth] = useState(false)
   // user details
-  const [authDetails, setAuthDetails] = useState({})
+  const [authDetails, setAuthDetails] = useState({
+    userName: ""
+  })
+  // login persist using localStorage
+  // const [persist, setPersist] = useState(false);
    
   // ------------------------------------ APIs -------------------------------------------
 
@@ -919,57 +923,57 @@ function App() {
 
 
   // call Airtable API on load to get saved like and album data
-  useEffect(() => {       
+  // useEffect(() => {       
     
-    base('State Name').select({
-      // Selecting the first 2 records in Grid view:
-      maxRecords: 2,
-      view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        // This function (`page`) will get called for each page of records.
-        // console.log(records)
+  //   base('State Name').select({
+  //     // Selecting the first 2 records in Grid view:
+  //     maxRecords: 2,
+  //     view: "Grid view"
+  //   }).eachPage(function page(records, fetchNextPage) {
+  //       // This function (`page`) will get called for each page of records.
+  //       // console.log(records)
         
-        records.forEach(function(record) {
-          const fieldOne = record?.get('Name');
-          // console.log(fieldOne);
-          // console.log('Retrieved', record.get('Name'));
-          const fieldTwo = record?.get('JSONstring');
-          // console.log(fieldTwo)
-          // console.log('Retrieved', record.get('JSONstring'));
-          if (fieldOne === "likedItemData") {
-            if (fieldTwo) {
-              console.log("get liked data");
-              setAirtableData(prevData => ({
-                ...prevData,
-                likedItemData: fieldTwo
-              }))
-            }           
-          } else if (fieldOne === "albumData") {
-            if (fieldTwo) {
-              console.log("get album data")
-              setAirtableData(prevData => ({
-                ...prevData,
-                albumData: fieldTwo
-              }))
-            }          
-          } else {
-            setAirtableData(prevData => ({
-              ...prevData,
-            }))
-          }
-        });
+  //       records.forEach(function(record) {
+  //         const fieldOne = record?.get('Name');
+  //         // console.log(fieldOne);
+  //         // console.log('Retrieved', record.get('Name'));
+  //         const fieldTwo = record?.get('JSONstring');
+  //         // console.log(fieldTwo)
+  //         // console.log('Retrieved', record.get('JSONstring'));
+  //         if (fieldOne === "likedItemData") {
+  //           if (fieldTwo) {
+  //             console.log("get liked data");
+  //             setAirtableData(prevData => ({
+  //               ...prevData,
+  //               likedItemData: fieldTwo
+  //             }))
+  //           }           
+  //         } else if (fieldOne === "albumData") {
+  //           if (fieldTwo) {
+  //             console.log("get album data")
+  //             setAirtableData(prevData => ({
+  //               ...prevData,
+  //               albumData: fieldTwo
+  //             }))
+  //           }          
+  //         } else {
+  //           setAirtableData(prevData => ({
+  //             ...prevData,
+  //           }))
+  //         }
+  //       });
   
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
-        try {
-          fetchNextPage();
-        } catch { return; }
+  //       // To fetch the next page of records, call `fetchNextPage`.
+  //       // If there are more records, `page` will get called again.
+  //       // If there are no more records, `done` will get called.
+  //       try {
+  //         fetchNextPage();
+  //       } catch { return; }
   
-    }, function done(err) {
-        if (err) { console.error(err); return; }                
-    });    
-  }, [])
+  //   }, function done(err) {
+  //       if (err) { console.error(err); return; }                
+  //   });    
+  // }, [])
 
   // useEffect(() => {getUser()}, [])
 
@@ -1031,7 +1035,8 @@ function App() {
     isAuth,    
     setIsAuth,
     authDetails,
-    setAuthDetails
+    setAuthDetails,
+    
   }
 
   

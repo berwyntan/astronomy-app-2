@@ -53,10 +53,10 @@ export default function Login () {
             );
             // console.log(JSON.stringify(response?.data));
             console.log(JSON.stringify(response.data));
-            const accessToken = response?.data?.accessToken;
-            console.log(accessToken)
+            // const accessToken = response?.data?.accessToken;
+            // console.log(accessToken)
             
-            setAuthDetails({ userName, password, accessToken});
+            setAuthDetails({ userName: userName });
             setUserName("");
             setPassword("");
             setIsAuth(true);
