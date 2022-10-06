@@ -11,16 +11,22 @@ export default function Navbar() {
     const { 
         handleScrollToTop, mode, handleDatePicker, handleDateSearch, searchDate, 
         handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode,
-        feedView, handleAlbumTab
+        feedView, handleAlbumTab, setLikedItemData, setAlbumData
     } = dataContext || {}
 
-    const { isAuth, setIsAuth, authDetails } = useAuth();
+    const { isAuth, setIsAuth, authDetails, setAuthDetails } = useAuth();
 
     const navigate = useNavigate();
 
     const handleLogout = () => {
         setIsAuth(false);
-        navigate("/");
+        setAuthDetails({});
+        setLikedItemData([]);
+        setAlbumData({
+            form: "",
+            albums: []
+          });
+        navigate("/latest");
     }
 
     return (

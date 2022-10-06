@@ -830,6 +830,8 @@ function App() {
   //   console.log("signing up...")
   // }
 
+  
+
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
   // useEffect(() => {callApiRandom()}, [])
@@ -1047,6 +1049,8 @@ function App() {
     callApiByDate,
     callApiRandom,
     handleTitle,
+    setLikedItemData,
+    setAlbumData
   }
 
   const auth = {

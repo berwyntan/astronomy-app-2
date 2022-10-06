@@ -17,6 +17,8 @@ export default function Latest() {
         handleTitle(newTitle);
     }, [])
 
+    // console.log("loading latest")
+
     return(
         <>
             <Container />

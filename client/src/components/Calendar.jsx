@@ -20,7 +20,7 @@ export default function Search() {
     return (
         <>
         
-        <div className="absolute top-16 right-1 z-70">
+        <div className="absolute top-20 right-1 z-70">
         <DatePicker 
             selected={searchDate} 
             onChange={(date) => handleDateSearch(date)}
