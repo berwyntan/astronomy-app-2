@@ -97,9 +97,7 @@ function App() {
   // check if user is logged in
   const [isAuth, setIsAuth] = useState(false)
   // user details
-  const [authDetails, setAuthDetails] = useState({
-    userName: ""
-  })
+  const [authDetails, setAuthDetails] = useState({})
   // login persist using localStorage
   // const [persist, setPersist] = useState(false);
    
@@ -185,7 +183,7 @@ function App() {
     axios.get(`${import.meta.env.VITE_SERVER}/random`)
     .then(function (response) {
       // handle success
-      console.log(response.data);
+      // console.log(response.data);
       setItemData(prevData => (
         [
           ...prevData,
@@ -709,16 +707,16 @@ function App() {
   }
 
   // update state with STRING data from airtable 
-  const updateLikesFromAirtable = () => {
+  const updateLikesFromServer = () => {
     setLikedItemData(prevData => {
-      const check = airtableData?.likedItemData;
+      const check = authDetails?.likedItemData;
       let likes;
       let checkedLikes;
       
-      if (check && airtableData.likedItemData !== "") {          
-        likes = JSON.parse(airtableData.likedItemData);
+      if (check && authDetails.likedItemData !== "") {          
+        likes = JSON.parse(authDetails.likedItemData);
         // console.log(likes);   
-        console.log("updating likes from AT: string to JSON")
+        console.log("updating likes from server: string to JSON")
 
         checkedLikes = likes.filter(like => {
           if (checkLikedItems(like) === false) {
@@ -736,43 +734,19 @@ function App() {
     })
   }
 
-  // convert like data to string, upload to Airtable
-  const updateLikesToAirtable = () => {
-    const likes = likedItemData;
-    if (likes.length > 0) {
-      const updatedLikes = JSON.stringify(likes);
-    console.log("updating likes to AT");
-    base('State Name').update([
-      {
-        "id": "recNOmMqSacjOAej7",
-        "fields": {
-          "Name": "likedItemData",
-          "JSONstring": updatedLikes,
-        }
-      },
-    ], function(err, records) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      records.forEach(function(record) {
-        // console.log(record.get('Name'));
-      });
-    });
-    }    
-  }
+  
 
   // update state with STRING data from airtable 
   const updateAlbumsFromAirtable = () => {
     
     setAlbumData(prevData => {
-      const check = airtableData?.albumData;
+      const check = authDetails?.albumData;
       let albums;
       let checkedAlbums;
       // check if defined
-      if (check && airtableData.albumData !== "") {          
-        albums = JSON.parse(airtableData.albumData);        
-        console.log("updating albums from AT: string to JSON")
+      if (check && authDetails.albumData !== "") {          
+        albums = JSON.parse(authDetails.albumData);        
+        console.log("updating albums from server: string to JSON")
         console.log(albums);  
         // check if album route already exists
         const albumRoutesArray = prevData.albums.map(album => album.route);
@@ -804,26 +778,43 @@ function App() {
     const albums = albumData.albums;
     if (albums.length > 0) {
       const updatedAlbums = JSON.stringify(albums);
-    console.log("updating albums to AT");
-    base('State Name').update([
-      {
-        "id": "rec9DnEWJXQKzp77l",
-        "fields": {
-          "Name": "albumData",
-          "JSONstring": updatedAlbums,
-        }
-      },
-    ], function(err, records) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      records.forEach(function(record) {
-        // console.log(record.get('Name'));
-      });
-    });
-    }    
+      console.log("updating albums to server");
+      axios.put(`${import.meta.env.VITE_SERVER}/update/albums`, 
+        JSON.stringify({ 
+            user: authDetails.userName,
+            albums: updatedAlbums
+        }),
+        {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
   }
+  //   base('State Name').update([
+  //     {
+  //       "id": "rec9DnEWJXQKzp77l",
+  //       "fields": {
+  //         "Name": "albumData",
+  //         "JSONstring": updatedAlbums,
+  //       }
+  //     },
+  //   ], function(err, records) {
+  //     if (err) {
+  //       console.error(err);
+  //       return;
+  //     }
+  //     records.forEach(function(record) {
+  //       // console.log(record.get('Name'));
+  //     });
+  //   });
+  //   }    
+  // }
 
   const handleTitle = (title) => {
     setTitle(title);
@@ -849,18 +840,47 @@ function App() {
   useEffect(() => {document.title = title}, [title])
 
   // upload data to airtable
-  useEffect(() => updateLikesToAirtable(), [likedItemData])
+  useEffect(() => {
+    // convert like data to string, upload to Airtable
+  const updateLikesToServer = async () => {
+    const likes = likedItemData;
+    if (likes.length > 0) {
+      const updatedLikes = JSON.stringify(likes);
+      console.log("updating likes to server");
+      try {
+        const response = await axios.put(`${import.meta.env.VITE_SERVER}/update/likes`, 
+            JSON.stringify({ 
+                user: authDetails.userName,
+                likes: updatedLikes
+            }),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
+            }
+        );
+        
+        console.log(JSON.stringify(response.data));               
+        
+    } catch (err) {
+        console.log(err);
+    }}
+  }
+
+  updateLikesToServer();
+
+  }, [likedItemData])
+
   useEffect(() => updateAlbumsToAirtable(), [albumData])
 
   // set states for likes and albums when airtable string data is received
   useEffect(() => {
     const delay = () => {
-      updateLikesFromAirtable(); updateAlbumsFromAirtable()
+      updateLikesFromServer(); updateAlbumsFromAirtable()
     };
     setTimeout(delay, 0);  
 
     return clearTimeout(delay);
-  }, [airtableData])
+  }, [authDetails])
   
   // lazy load images listener
   useEffect(() => {
@@ -1024,8 +1044,6 @@ function App() {
     updateAlbumData,
     handleAlbumTab,
     updateAlbumsToAirtable,
-    updateLikesFromAirtable,
-    updateAlbumsFromAirtable,
     callApiByDate,
     callApiRandom,
     handleTitle,

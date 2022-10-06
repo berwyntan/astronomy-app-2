@@ -49,6 +49,7 @@ app.use('/random', require('./routes/random'));
 app.use('/latest', require('./routes/latest'));
 app.use('/signup', require('./routes/signup'));
 app.use('/auth', require('./routes/auth'));
+app.use('/update', require('./routes/update'));
 
 // routes
 app.get("/", (req, res) => {

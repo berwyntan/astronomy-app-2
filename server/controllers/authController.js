@@ -9,44 +9,21 @@ const handleLogin = async (req, res) => {
     if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
 
     const foundUser = await User.findOne({ username: user }).exec();
-    console.log(foundUser);
+    // console.log(foundUser);
     if (!foundUser) return res.sendStatus(401); //Unauthorized 
     // evaluate password 
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match) {
-    // if (foundUser.password === pwd) {
-    //     // const roles = Object.values(foundUser.roles).filter(Boolean);
-    //     // create JWTs
-    //     const accessToken = jwt.sign(
-    //         {
-    //             "UserInfo": {
-    //                 "username": foundUser.username,
-    //                 // "roles": roles
-    //             }
-    //         },
-    //         process.env.ACCESS_TOKEN_SECRET,
-    //         { expiresIn: '1h' }
-    //     );
-    //     const refreshToken = jwt.sign(
-    //         { "username": foundUser.username },
-    //         process.env.REFRESH_TOKEN_SECRET,
-    //         { expiresIn: '1d' }
-    //     );
-    //     // Saving refreshToken with current user
-    //     foundUser.refreshToken = refreshToken;
-    //     const result = await foundUser.save();
-        // console.log(result);
-        // console.log(roles);
-
-        // Creates Secure Cookie with refresh token
-        // res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-
-        // Send authorization roles and access token to user
-        res.json({ /*roles, accessToken*/message: `user ${user} successfully logged in` });
+        const likedItemData = foundUser.likes;
+        const albumData = foundUser.albums;
+        res.json({ 
+            message: `user ${user} successfully logged in`,
+            likedItemData: likedItemData,
+            albumData: albumData
+         });
+    } else {
+        res.sendStatus(401);
     }
-    // } else {
-    //     res.sendStatus(401);
-    // }
 }
 
 module.exports = { handleLogin };

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { DataContext } from '../App'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useAuth from "../../hooks/useAuth";
 
 import Calendar from "./Calendar"
@@ -11,13 +11,16 @@ export default function Navbar() {
     const { 
         handleScrollToTop, mode, handleDatePicker, handleDateSearch, searchDate, 
         handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode,
-        handleAlbumsMode, feedView, handleAlbumTab
+        feedView, handleAlbumTab
     } = dataContext || {}
 
     const { isAuth, setIsAuth, authDetails } = useAuth();
 
+    const navigate = useNavigate();
+
     const handleLogout = () => {
         setIsAuth(false);
+        navigate("/");
     }
 
     return (

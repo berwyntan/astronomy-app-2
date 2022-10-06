@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
 import { Link, useNavigate } from "react-router-dom";
@@ -11,10 +11,6 @@ export default function Login () {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-
-    const authGoogle = () => {
-        window.open(`${import.meta.env.VITE_SERVER}/auth/google`, "_self")
-    };
 
     const { setIsAuth, setAuthDetails } = useAuth();
 
@@ -52,11 +48,15 @@ export default function Login () {
                 }
             );
             // console.log(JSON.stringify(response?.data));
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
             // const accessToken = response?.data?.accessToken;
             // console.log(accessToken)
             
-            setAuthDetails({ userName: userName });
+            setAuthDetails({ 
+                userName: userName, 
+                likedItemData: response?.data.likedItemData,
+                albumData: response?.data.albumData
+             });
             setUserName("");
             setPassword("");
             setIsAuth(true);
