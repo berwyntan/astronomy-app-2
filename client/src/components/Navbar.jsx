@@ -19,7 +19,7 @@ export default function Navbar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        setIsAuth(false);
+        // setIsAuth(false);
         setAuthDetails({});
         setLikedItemData([]);
         setAlbumData({
@@ -84,12 +84,12 @@ export default function Navbar() {
                     </span>
                 </Link>
                 {
-                    isAuth
+                    authDetails?.userName
                     ? 
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-8 rounded-full">
-                            <img src="https://placeimg.com/80/80/people" />
+                            <img src="https://apod.nasa.gov/apod/image/2209/DSCF4968_PS_Lioce-1024.jpg" />
                             </div>
                         </label>
                         <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">

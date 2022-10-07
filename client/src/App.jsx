@@ -3,14 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Likes from './layout/Likes'
 import Layout from './layout/Layout'
-import Container from './components/Container'
 import Albums from './layout/Albums'
 import Album from './layout/Album'
 import Search from './layout/Search'
 import Shuffle from './layout/Shuffle'
 import Latest from './layout/Latest'
 import NotFound from './layout/NotFound'
-import RequireAuth from './components/RequireAuth'
+import RequireAuth from './layout/RequireAuth'
 import Login from './layout/Login'
 import Signup from './layout/Signup'
 
@@ -23,6 +22,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
 import Airtable from 'airtable'
+import PersistLogin from './layout/PersistLogin'
 
 export const DataContext = createContext();
 export const AuthContext = createContext();
@@ -259,7 +259,7 @@ function App() {
   // add or remove saves from likedItemData
   const handleLike = (item) => {
 
-    if (!isAuth) {      
+    if (!authDetails?.userName) {      
       return;
     }
     
@@ -297,7 +297,7 @@ function App() {
     //   updateLikesToAirtable();
     // }
 
-    if (!isAuth) {      
+    if (!authDetails?.userName) {      
       return;
     }
 
@@ -587,7 +587,7 @@ function App() {
     //   updateAlbumsToAirtable();
     // }
 
-    if (!isAuth) {      
+    if (!authDetails?.userName) {      
       return;
     }
 
@@ -629,7 +629,7 @@ function App() {
   // add/remove item from album
   const handleBookmark = (album, item, found) => {
     
-    if (!isAuth) {      
+    if (!authDetails?.userName) {      
       return;
     }
 
@@ -944,75 +944,11 @@ function App() {
   }, [feedView])
 
 
-  // call Airtable API on load to get saved like and album data
-  // useEffect(() => {       
-    
-  //   base('State Name').select({
-  //     // Selecting the first 2 records in Grid view:
-  //     maxRecords: 2,
-  //     view: "Grid view"
-  //   }).eachPage(function page(records, fetchNextPage) {
-  //       // This function (`page`) will get called for each page of records.
-  //       // console.log(records)
-        
-  //       records.forEach(function(record) {
-  //         const fieldOne = record?.get('Name');
-  //         // console.log(fieldOne);
-  //         // console.log('Retrieved', record.get('Name'));
-  //         const fieldTwo = record?.get('JSONstring');
-  //         // console.log(fieldTwo)
-  //         // console.log('Retrieved', record.get('JSONstring'));
-  //         if (fieldOne === "likedItemData") {
-  //           if (fieldTwo) {
-  //             console.log("get liked data");
-  //             setAirtableData(prevData => ({
-  //               ...prevData,
-  //               likedItemData: fieldTwo
-  //             }))
-  //           }           
-  //         } else if (fieldOne === "albumData") {
-  //           if (fieldTwo) {
-  //             console.log("get album data")
-  //             setAirtableData(prevData => ({
-  //               ...prevData,
-  //               albumData: fieldTwo
-  //             }))
-  //           }          
-  //         } else {
-  //           setAirtableData(prevData => ({
-  //             ...prevData,
-  //           }))
-  //         }
-  //       });
-  
-  //       // To fetch the next page of records, call `fetchNextPage`.
-  //       // If there are more records, `page` will get called again.
-  //       // If there are no more records, `done` will get called.
-  //       try {
-  //         fetchNextPage();
-  //       } catch { return; }
-  
-  //   }, function done(err) {
-  //       if (err) { console.error(err); return; }                
-  //   });    
-  // }, [])
-
+ 
   // useEffect(() => {getUser()}, [])
 
   // --------------------------------------- CONSOLE LOG ----------------------------
-  // console.log(itemData)
-  // console.log("saves: ")
-  // console.log(likedItemData)
-  // console.log(cardGridSingle)
-  // console.log(dateStringForApi)
-  // console.log(lastInteraction)
   
-  // const album1 = `${albumData.albums[0].route}` || ""
-  // console.log(albumData)
-  // console.log(import.meta.env.VITE_NASA_API)
-  // const x = albumData.albums
-  // const y = JSON.stringify(x)
-  // console.log(y)
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
@@ -1054,8 +990,7 @@ function App() {
   }
 
   const auth = {
-    isAuth,    
-    setIsAuth,
+    
     authDetails,
     setAuthDetails,
     
@@ -1087,6 +1022,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route> 
 
+        <Route element={<PersistLogin />}>
         <Route element={<RequireAuth />}>
           <Route path="/likes" element={<Layout />}>
             <Route index element={<Likes />} />
@@ -1095,7 +1031,9 @@ function App() {
             <Route index element={<Albums />} />
             <Route path=":albumroute" element={<Album />} />
           </Route> 
-        </Route>         
+        </Route> 
+        </Route>
+               
         
       </Routes>
     </BrowserRouter>

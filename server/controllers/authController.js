@@ -1,6 +1,6 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
     const { user, pwd } = req.body;
@@ -14,12 +14,37 @@ const handleLogin = async (req, res) => {
     // evaluate password 
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match) {
+
+        // create JWTs
+        const accessToken = jwt.sign(
+            {
+                "UserInfo": {
+                    "username": foundUser.username,
+                }
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '1d' }
+        );
+        const refreshToken = jwt.sign(
+            { "username": foundUser.username },
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '2d' }
+        );
+
+        // Saving refreshToken with current user
+        foundUser.refreshToken = refreshToken;
+        const result = await foundUser.save();
+
+        // Creates Secure Cookie with refresh token
+        res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 2 * 24 * 60 * 60 * 1000 });
+
         const likedItemData = foundUser.likes;
         const albumData = foundUser.albums;
         res.json({ 
             message: `user ${user} successfully logged in`,
             likedItemData: likedItemData,
-            albumData: albumData
+            albumData: albumData,
+            accessToken: accessToken
          });
     } else {
         res.sendStatus(401);

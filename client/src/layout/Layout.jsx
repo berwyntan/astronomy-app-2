@@ -4,12 +4,12 @@ import useAuth from "../../hooks/useAuth";
 
 function Layout() {
 
-  const { isAuth } = useAuth();
+  const { authDetails } = useAuth();
 
   return (
     <>
       <Navbar/> 
-      { !isAuth && 
+      { !authDetails?.userName && 
       <div className="top-14  bg-slate-50 dark:bg-slate-800 fixed z-50 w-full">
         <Link to="/login"><p className="text-center font-bold">LOG IN TO LIKE AND SAVE POSTS</p></Link>
       </div> }

@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from '../api/axios';
 
 export default function Login () {
 
@@ -12,7 +12,7 @@ export default function Login () {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
-    const { setIsAuth, setAuthDetails } = useAuth();
+    const { setAuthDetails } = useAuth();
 
     const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export default function Login () {
 
         try {
 
-            const response = await axios.post(`${import.meta.env.VITE_SERVER}/auth`, 
+            const response = await axios.post("/auth", 
                 JSON.stringify({ 
                     user: userName,
                     pwd: password
@@ -49,17 +49,18 @@ export default function Login () {
             );
             // console.log(JSON.stringify(response?.data));
             // console.log(JSON.stringify(response.data));
-            // const accessToken = response?.data?.accessToken;
+            const accessToken = response?.data?.accessToken;
             // console.log(accessToken)
             
             setAuthDetails({ 
                 userName: userName, 
                 likedItemData: response?.data.likedItemData,
-                albumData: response?.data.albumData
+                albumData: response?.data.albumData,
+                accessToken: accessToken
              });
             setUserName("");
             setPassword("");
-            setIsAuth(true);
+            // setIsAuth(true);
             navigate("/")
         } catch (err) {
             if (!err?.response) {
