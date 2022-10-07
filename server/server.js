@@ -11,7 +11,7 @@ const session = require('express-session');
 const sessionOptions = require('./session');
 const passport = require('passport');
 const User = require('./model/User');
-require("./passport");
+require("./config/passport");
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
