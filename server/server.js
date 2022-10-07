@@ -52,7 +52,7 @@ app.use('/signup', require('./routes/signup'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use('/update', require('./routes/update'));
 
 // routes
