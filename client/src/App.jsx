@@ -9,7 +9,7 @@ import Search from './layout/Search'
 import Shuffle from './layout/Shuffle'
 import Latest from './layout/Latest'
 import NotFound from './layout/NotFound'
-import RequireAuth from './components/RequireAuth'
+import RequireAuth from './layout/RequireAuth'
 import Login from './layout/Login'
 import Signup from './layout/Signup'
 
@@ -22,6 +22,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
 import Airtable from 'airtable'
+import PersistLogin from './layout/PersistLogin'
 
 export const DataContext = createContext();
 export const AuthContext = createContext();
@@ -1021,6 +1022,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route> 
 
+        <Route element={<PersistLogin />}>
         <Route element={<RequireAuth />}>
           <Route path="/likes" element={<Layout />}>
             <Route index element={<Likes />} />
@@ -1029,7 +1031,9 @@ function App() {
             <Route index element={<Albums />} />
             <Route path=":albumroute" element={<Album />} />
           </Route> 
-        </Route>         
+        </Route> 
+        </Route>
+               
         
       </Routes>
     </BrowserRouter>
