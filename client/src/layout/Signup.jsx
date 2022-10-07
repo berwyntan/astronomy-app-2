@@ -19,7 +19,7 @@ export default function Login () {
 
     const navigate = useNavigate();
 
-    const { setIsAuth, setAuthDetails } = useAuth();
+    const { setAuthDetails } = useAuth();
 
     const handleUserName = (event) => {
         // console.log(event.target.value);
@@ -60,7 +60,7 @@ export default function Login () {
             setAuthDetails({ userName: userName });
             setUserName("");
             setPassword("")
-            setIsAuth(true);
+            // setIsAuth(true);
             navigate("/")
         } catch (err) {
             if (!err?.response) {

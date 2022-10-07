@@ -8,7 +8,7 @@ import bookmarkSolid from "../icons/bookmark-solid.svg"
 
 export default function AlbumDropdown({ bookmark, item }) {
 
-    const { isAuth } = useAuth();
+    const { authDetails } = useAuth();
 
     const dataContext = useContext(DataContext);
 
@@ -16,7 +16,7 @@ export default function AlbumDropdown({ bookmark, item }) {
 
     let albumNames;
 
-    if (isAuth) {
+    if (authDetails.userName) {
         albumNames = albumData.albums.map((album, index) => {
         
             const found = album.data.find(info => info.date === item.date)        
@@ -54,7 +54,7 @@ export default function AlbumDropdown({ bookmark, item }) {
                 }
             </label>
                 {
-                    isAuth
+                    authDetails.userName
                     &&  
                     <ul tabIndex={0} className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-40">
                     {albumNames}    

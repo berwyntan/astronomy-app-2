@@ -34,11 +34,12 @@ app.use(credentials);
 //         maxAge: 24 * 60 * 60 * 100
 //     }
 // ));
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
-app.use(cors(corsOptions));
+
 
 // app.use(session(sessionOptions));    
 
@@ -49,13 +50,16 @@ app.use('/random', require('./routes/random'));
 app.use('/latest', require('./routes/latest'));
 app.use('/signup', require('./routes/signup'));
 app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+
+// app.use(verifyJWT);
 app.use('/update', require('./routes/update'));
 
 // routes
 app.get("/", (req, res) => {
     res.json({ message: "hello world" })
 });
-app.use(verifyJWT);
+
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
