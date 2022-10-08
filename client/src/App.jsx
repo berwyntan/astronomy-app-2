@@ -95,7 +95,7 @@ function App() {
   // ---------------------------- AUTH -------------------------------------------
 
   // check if user is logged in
-  const [isAuth, setIsAuth] = useState(false)
+  // const [isAuth, setIsAuth] = useState(false)
   // user details
   const [authDetails, setAuthDetails] = useState({})
   // login persist using localStorage
@@ -1002,6 +1002,7 @@ function App() {
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
       <Routes> 
+      <Route element={<PersistLogin />}>
         <Route path="/signup" element={<Layout />}>
           <Route index element={<Signup />} />
         </Route>
@@ -1022,7 +1023,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route> 
 
-        <Route element={<PersistLogin />}>
+        
         <Route element={<RequireAuth />}>
           <Route path="/likes" element={<Layout />}>
             <Route index element={<Likes />} />

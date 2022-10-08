@@ -57,11 +57,11 @@ export default function Login () {
             );
             // console.log(JSON.stringify(response?.data));
             // console.log(JSON.stringify(response));
-            setAuthDetails({ userName: userName });
+            // setAuthDetails({ userName: userName });
             setUserName("");
             setPassword("")
             // setIsAuth(true);
-            navigate("/")
+            navigate("/login")
         } catch (err) {
             if (!err?.response) {
                 setErrorMsg("No Server Response");
@@ -128,7 +128,7 @@ export default function Login () {
             
             <p className="text-red-600 text-sm">{errorMsg}</p>
             <div className="ml-6 mt-4">
-                Have an account? <Link to="/login" className="link link-primary">Log in.</Link>
+                Have an account? <Link to="/login" className="link link-hover dark:text-slate-50">Log in.</Link>
             </div>
             
         </form>

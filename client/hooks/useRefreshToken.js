@@ -10,11 +10,14 @@ const useRefreshToken = () => {
         });
         setAuthDetails(prev => {
             console.log(JSON.stringify(prev));
-            console.log(response.data.accessToken);
+            console.log(response.data);
             return {
                 ...prev,
                 // roles: response.data.roles,
-                accessToken: response.data.accessToken
+                accessToken: response.data.accessToken,
+                userName: response.data.userName,
+                likedItemData: response.data.likedItemData,
+                albumData: response.data.albumData
             }
         });
         return response.data.accessToken;
@@ -23,3 +26,4 @@ const useRefreshToken = () => {
 };
 
 export default useRefreshToken;
+

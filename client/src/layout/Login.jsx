@@ -112,7 +112,9 @@ export default function Login () {
             <button type="submit" className="btn w-full max-w-xs mt-4 mb-2">LOG IN</button>
             <p className="text-red-600 text-sm">{errorMsg}</p>
             <div className="ml-6 mt-4">
-                Don't have an account? <Link to="/signup" className="link link-primary">Create one.</Link>
+                Don't have an account? <Link to="/signup" className="link link-hover dark:text-slate-50">
+                    Create one.
+                </Link>
             </div>
             
         </form>

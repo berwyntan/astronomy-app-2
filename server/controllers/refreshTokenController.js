@@ -25,7 +25,12 @@ const handleRefreshToken = async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1d' }
             );
-            res.json({ accessToken })
+            res.json({ 
+                accessToken: accessToken, 
+                userName: foundUser.username,
+                likedItemData: foundUser.likes,
+                albumData: foundUser.albums
+             })
         }
     );
 }
