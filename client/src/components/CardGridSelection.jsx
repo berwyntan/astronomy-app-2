@@ -1,11 +1,13 @@
 import { useContext } from 'react'
 import { DataContext } from '../App'
+import useAuth from "../hooks/useAuth";
 
 import AlbumDropdown from './AlbumDropdown'
 
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import close from "../icons/x-mark.svg"
+import user from "../icons/user.svg"
 
 export default function CardGridSelection() {
     
@@ -17,6 +19,8 @@ export default function CardGridSelection() {
 
     const like = checkLikedItems(cardGridSingle.item);
     const bookmark = checkAlbumData(cardGridSingle.item);
+
+    const { updateProfilePhoto } = useAuth();
 
     return (
         <div className="z-50 fixed top-1 w-screen h-screen left-0 bg-slate-100/95 flex dark:bg-slate-800/95">
@@ -44,6 +48,10 @@ export default function CardGridSelection() {
                     }
                 
                     <AlbumDropdown bookmark={bookmark} item={cardGridSingle.item} />
+
+                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => updateProfilePhoto(cardGridSingle.item.url)}>
+                        <img className="h-5" src={user} />
+                    </button>
                 </div>
                 <p className="max-w-sm text-xs mx-4 xl:text-sm">{cardGridSingle.item.explanation}</p>
                 <p className="ml-4 mt-2 font-light">{cardGridSingle.item.date}</p>

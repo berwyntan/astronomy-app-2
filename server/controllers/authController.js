@@ -43,11 +43,13 @@ const handleLogin = async (req, res) => {
 
         const likedItemData = foundUser.likes;
         const albumData = foundUser.albums;
+        const profilePhoto = foundUser.profilePhoto;
         res.json({ 
             message: `user ${user} successfully logged in`,
             likedItemData: likedItemData,
             albumData: albumData,
-            accessToken: accessToken
+            accessToken: accessToken,
+            profilePhoto: profilePhoto
          });
     } else {
         res.sendStatus(401);

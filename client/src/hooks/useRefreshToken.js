@@ -18,7 +18,8 @@ const useRefreshToken = () => {
                 accessToken: response.data.accessToken,
                 userName: response.data.userName,
                 likedItemData: response.data.likedItemData,
-                albumData: response.data.albumData
+                albumData: response.data.albumData,
+                profilePhoto: response.data.profilePhoto
             }
         });
         return response.data.accessToken;

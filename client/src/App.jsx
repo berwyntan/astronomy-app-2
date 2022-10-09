@@ -85,7 +85,13 @@ function App() {
 
   // check if user is logged in
   
-  const [authDetails, setAuthDetails] = useState({})
+  const [authDetails, setAuthDetails] = useState({
+    userName: "", 
+    profilePhoto: "",
+    likedItemData: "",
+    albumData: "",
+    accessToken: ""
+  })
 
   // login persist using localStorage
   // const [persist, setPersist] = useState(false);
@@ -682,7 +688,7 @@ function App() {
     
     if (albums.length > 0) {
       const updatedAlbums = JSON.stringify(albums);
-      console.log("updating albums to server");
+      // console.log("updating albums to server");
       axios.put(`${import.meta.env.VITE_SERVER}/update/albums`, 
         JSON.stringify({ 
             user: authDetails.userName,
@@ -708,11 +714,46 @@ function App() {
           }          
         })        
     }
-  }
-  
+  }  
 
   const handleTitle = (title) => {
     setTitle(title);
+  }
+
+  const updateProfilePhoto = (url) => {
+    if (!authDetails?.userName) {      
+      return;
+    }
+
+    setAuthDetails(prevData => ({
+      ...prevData,
+      profilePhoto: url
+    }))
+
+    axios.put(`${import.meta.env.VITE_SERVER}/update/profile`, 
+        JSON.stringify({ 
+            user: authDetails.userName,
+            profilePhoto: authDetails.profilePhoto
+        }),
+        {
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authDetails?.accessToken}`
+             },
+            withCredentials: true
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(error.response.status);
+          
+          if (error.response.status === 403) {
+            location.reload();
+            
+          }          
+        })        
   }
 
     
@@ -729,7 +770,7 @@ function App() {
     const likes = likedItemData;
     if (likes.length > 0) {
       const updatedLikes = JSON.stringify(likes);
-      console.log("updating likes to server");
+      // console.log("updating likes to server");
       try {
         const response = await axios.put(`${import.meta.env.VITE_SERVER}/update/likes`, 
             JSON.stringify({ 
@@ -749,9 +790,12 @@ function App() {
         
     } catch (err) {
         console.log(err);
-        
-    } 
-    }
+        // console.log(err.response.status);
+          
+          if (err.response.status === 403) {
+            location.reload();
+          } 
+    }}
   }
 
   updateLikesToServer();
@@ -876,11 +920,10 @@ function App() {
     setAlbumData
   }
 
-  const auth = {
-    
+  const auth = {    
     authDetails,
     setAuthDetails,
-    
+    updateProfilePhoto
   }
 
   

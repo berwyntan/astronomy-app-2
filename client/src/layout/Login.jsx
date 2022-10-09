@@ -54,6 +54,7 @@ export default function Login () {
             
             setAuthDetails({ 
                 userName: userName, 
+                profilePhoto: response?.data?.profilePhoto,
                 likedItemData: response?.data.likedItemData,
                 albumData: response?.data.albumData,
                 accessToken: accessToken

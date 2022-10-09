@@ -15,7 +15,7 @@ export default function Navbar() {
         feedView, handleAlbumTab, setLikedItemData, setAlbumData
     } = dataContext || {}
 
-    const { isAuth, setIsAuth, authDetails, setAuthDetails } = useAuth();
+    const { authDetails, setAuthDetails } = useAuth();
 
     const navigate = useNavigate();
 
@@ -23,8 +23,8 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         // setIsAuth(false);
-        // setAuthDetails({});
         await logout();
+        // setAuthDetails({});
         setLikedItemData([]);
         setAlbumData({
             form: "",
@@ -93,7 +93,7 @@ export default function Navbar() {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-8 rounded-full">
-                            <img src="https://apod.nasa.gov/apod/image/2209/DSCF4968_PS_Lioce-1024.jpg" />
+                            <img src={authDetails?.profilePhoto || "https://apod.nasa.gov/apod/image/2210/JovianEclipse1024c.jpg"} />
                             </div>
                         </label>
                         <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">

@@ -1,6 +1,8 @@
 import { useState } from "react"
+import useAuth from "../hooks/useAuth";
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
+import user from "../icons/user.svg"
 
 import AlbumDropdown from "./AlbumDropdown"
 
@@ -8,6 +10,8 @@ export default function CardPost({
     item, handleLike, like, handleInteraction, 
     bookmark, mode }) {
     
+    const { updateProfilePhoto } = useAuth();
+
     const [seeMore, setSeeMore] = useState(false)
     // const [seeAlbum, setSeeAlbum] = useState(false)
 
@@ -43,6 +47,10 @@ export default function CardPost({
             }            
             
             <AlbumDropdown bookmark={bookmark} item={item} />
+
+            <button className="btn btn-square btn-ghost dark:invert" onClick={() => updateProfilePhoto(item.url)}>
+                <img className="h-5" src={user} />
+            </button>
                         
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{item?.explanation}</p>}

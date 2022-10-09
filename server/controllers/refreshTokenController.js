@@ -29,7 +29,8 @@ const handleRefreshToken = async (req, res) => {
                 accessToken: accessToken, 
                 userName: foundUser.username,
                 likedItemData: foundUser.likes,
-                albumData: foundUser.albums
+                albumData: foundUser.albums,
+                profilePhoto: foundUser.profilePhoto
              })
         }
     );
