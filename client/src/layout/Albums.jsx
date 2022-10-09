@@ -48,7 +48,7 @@ export default function Albums() {
     }, []);
 
     // for deleting albums
-    useEffect(() => {updateAlbumsToAirtable(); console.log("Albums component use effect triggered")}, []);
+    useEffect(() => {updateAlbumsToAirtable(); console.log("Albums updated")}, []);
 
     useEffect(() => {
         const newTitle = "Albums - Astronomy";

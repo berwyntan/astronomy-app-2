@@ -1,7 +1,8 @@
 import { useContext } from 'react'
 import { DataContext } from '../App'
 import { Link, useNavigate } from "react-router-dom"
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
+import useLogout from '../hooks/useLogout';
 
 import Calendar from "./Calendar"
 
@@ -18,9 +19,12 @@ export default function Navbar() {
 
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const logout = useLogout();
+
+    const handleLogout = async () => {
         // setIsAuth(false);
-        setAuthDetails({});
+        // setAuthDetails({});
+        await logout();
         setLikedItemData([]);
         setAlbumData({
             form: "",

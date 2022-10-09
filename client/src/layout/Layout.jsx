@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 function Layout() {
 

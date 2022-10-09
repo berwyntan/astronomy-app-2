@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { DataContext } from '../App'
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
 import bookmarkEmpty from "../icons/bookmark-empty.svg"
 import bookmarkSolid from "../icons/bookmark-solid.svg"

@@ -1,5 +1,5 @@
-import useAuth from "../../hooks/useAuth";
-import { useState, useEffect, useContext } from "react";
+import useAuth from "../hooks/useAuth";
+import { useState, useEffect } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
 import { Link, useNavigate } from "react-router-dom";

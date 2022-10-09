@@ -1,4 +1,4 @@
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import { useState } from "react";
 import eye from "../icons/eye.svg"
 import eyeSlash from "../icons/eye-slash.svg"
