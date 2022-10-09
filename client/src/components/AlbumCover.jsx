@@ -7,9 +7,9 @@ export default function AlbumCover({
 }) {
 
     const dataContext = useContext(DataContext);
-    const { updateAlbumsToAirtable } = dataContext || {}
+    const { updateAlbumsToServer } = dataContext || {}
 
-    useEffect(() => updateAlbumsToAirtable(), []);
+    useEffect(() => updateAlbumsToServer(), []);
 
     return(
         

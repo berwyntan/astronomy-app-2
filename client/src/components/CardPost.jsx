@@ -9,10 +9,10 @@ export default function CardPost({
     bookmark, mode }) {
     
     const [seeMore, setSeeMore] = useState(false)
-    const [seeAlbum, setSeeAlbum] = useState(false)
+    // const [seeAlbum, setSeeAlbum] = useState(false)
 
     const handleMore = () => setSeeMore(prevState => !prevState)
-    const handleBookmark = () => setSeeAlbum(prevState => !prevState)
+    // const handleBookmark = () => setSeeAlbum(prevState => !prevState)
 
     return (
         <div 

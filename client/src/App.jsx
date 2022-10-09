@@ -12,6 +12,7 @@ import NotFound from './layout/NotFound'
 import RequireAuth from './layout/RequireAuth'
 import Login from './layout/Login'
 import Signup from './layout/Signup'
+import PersistLogin from './layout/PersistLogin'
 
 import data from './data/sampleData'
 
@@ -21,20 +22,10 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
-import Airtable from 'airtable'
-import PersistLogin from './layout/PersistLogin'
 
 export const DataContext = createContext();
 export const AuthContext = createContext();
 
-
-
-Airtable.configure({ 
-  apiKey: 'keyOqYhriP7UXVBht',
-  endpointUrl: 'https://api.airtable.com',
-});
-
-let base = Airtable.base('appQerk9R1FpDeKEX');
 
 function App() {
   
@@ -86,18 +77,15 @@ function App() {
     isAtAlbumsTab: false,
   })
 
-  // to store data retrieved from airtable in string format
-  const [airtableData, setAirtableData] = useState()
-
   // to dynamically change document title
   const [title, setTitle] = useState("Astronomy")
 
   // ---------------------------- AUTH -------------------------------------------
 
   // check if user is logged in
-  // const [isAuth, setIsAuth] = useState(false)
-  // user details
+  
   const [authDetails, setAuthDetails] = useState({})
+
   // login persist using localStorage
   // const [persist, setPersist] = useState(false);
    
@@ -149,22 +137,7 @@ function App() {
         isLoading: false,
       }))
       calculateDateForApi()
-    })
-    // axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
-    // .then(function (response) {
-    //   // handle success
-    //   setItemData(prevData => (
-    //     [
-    //       ...prevData,
-    //       ...response.data.reverse()
-    //     ]
-    //   ))
-    //   setMode(prevState => ({
-    //     ...prevState,
-    //     isLoading: false,
-    //   }))
-    //   calculateDateForApi()
-    // })
+    })    
     .catch(function (error) {
       // handle error
       console.log(error);
@@ -194,22 +167,7 @@ function App() {
         ...prevState,
         isLoading: false,
       }))
-    })
-    // axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16`)
-    // .then(function (response) {
-    //   // handle success
-    //   console.log(response.data);
-    //   setItemData(prevData => (
-    //     [
-    //       ...prevData,
-    //       ...response.data
-    //     ]
-    //   ))
-    //   setMode(prevState => ({
-    //     ...prevState,
-    //     isLoading: false,
-    //   }))
-    // })
+    })    
     .catch(function (error) {
       // handle error
       console.log(error);
@@ -217,41 +175,6 @@ function App() {
     .then(function () {
       // always executed
       // console.log('callApiRandom')
-    });
-  }
-
-//   const authGoogle = () => {
-    
-//     axios.get(`${import.meta.env.VITE_SERVER}/auth/google`, {
-//       withCredentials: true,
-//     })
-//     .then((response) => {
-//       console.log(response);
-//       setIsAuth(true);
-//     })
-//     .catch(function (error) {
-//       // handle error
-//       console.log(error);
-//     })       
-    
-// }
-
-  // getUser
-  const getUser = () => {
-    axios.get(`${import.meta.env.VITE_SERVER}/auth/login/success`)
-    .then(function (response) {
-      console.log(response)
-      if (response.status === 200) return response.json();
-      throw new Error("authentication has failed");
-    })
-    .then((resObject) => {
-      console.log(resObject)
-      console.log("user preferneces loaded")
-      setIsAuth(resObject.user);
-    })    
-    .catch(function (error) {
-      // handle error
-      console.log(error);
     });
   }
 
@@ -288,15 +211,7 @@ function App() {
 
   // check if card is liked when rendering
   const checkLikedItems = (item) => {
-    // setTimeout(updateLikesToAirtable, 150);
-    // updateLikesToAirtable();    
-    // const debounceUpdateLikesToAirtable = debounce(updateLikesToAirtable, 100);
-    // debounceUpdateLikesToAirtable;
-    // const coin = Math.floor(Math.random()*100);
-    // if (coin > 80) {
-    //   updateLikesToAirtable();
-    // }
-
+    
     if (!authDetails?.userName) {      
       return;
     }
@@ -319,7 +234,7 @@ function App() {
   }
 
   const handleRandomView = () => {    
-    // setRandomMode(true);
+   
     setMode(prevState => ({
       ...prevState,
       latest: false,
@@ -341,7 +256,7 @@ function App() {
 
   const handleLatestView = () => {
     if (mode.random) {
-      // setRandomMode(false);  
+      
       setMode(prevState => ({
         ...prevState,
         latest: true,
@@ -369,9 +284,7 @@ function App() {
         offset: 11,
       })
       setSearchDate();
-      // closeDatePicker();
-      // setRandomMode(false);
-      // setSearchMode(false);
+      
       setMode(prevState => ({
         ...prevState,
         latest: true,
@@ -389,7 +302,6 @@ function App() {
       callApiByDate();
     }
   }  
-
   
   // freeze grid view and render a modal of selection
   const loadGridSingleView = (item) => {
@@ -426,7 +338,7 @@ function App() {
 
   // toggle the date picker for searching
   const handleDatePicker = () => {
-    // setIsSearching(prevState => !prevState)
+    
     setMode(prevState => {
       return(
         {
@@ -457,12 +369,10 @@ function App() {
       offset: diff + 11,
     })
     
-    // call API by date
-    // callApiByDate();
+    
     setSearchDate(date);
     closeDatePicker();
-    // setRandomMode(false);
-    // setSearchMode(true);
+   
     setMode(prevState => ({
       ...prevState,
       latest: false,
@@ -582,11 +492,6 @@ function App() {
   // check if photo is stored in albums
   const checkAlbumData = item => {
 
-    // const coin = Math.floor(Math.random()*100);
-    // if (coin > 85) {
-    //   updateAlbumsToAirtable();
-    // }
-
     if (!authDetails?.userName) {      
       return;
     }
@@ -700,10 +605,6 @@ function App() {
       albums: updatedData
     }))
 
-    // const coin = Math.floor(Math.random()*100);
-    // if (coin > 85) {
-    // updateAlbumsToAirtable();
-    // }
   }
 
   // update state with STRING data from airtable 
@@ -737,7 +638,7 @@ function App() {
   
 
   // update state with STRING data from airtable 
-  const updateAlbumsFromAirtable = () => {
+  const updateAlbumsFromServer = () => {
     
     setAlbumData(prevData => {
       const check = authDetails?.albumData;
@@ -774,7 +675,7 @@ function App() {
   }
 
   // convert album data to string, upload to Airtable
-  const updateAlbumsToAirtable = () => {
+  const updateAlbumsToServer = () => {
     const albums = albumData.albums;
     if (albums.length > 0) {
       const updatedAlbums = JSON.stringify(albums);
@@ -796,54 +697,22 @@ function App() {
         })
     }
   }
-  //   base('State Name').update([
-  //     {
-  //       "id": "rec9DnEWJXQKzp77l",
-  //       "fields": {
-  //         "Name": "albumData",
-  //         "JSONstring": updatedAlbums,
-  //       }
-  //     },
-  //   ], function(err, records) {
-  //     if (err) {
-  //       console.error(err);
-  //       return;
-  //     }
-  //     records.forEach(function(record) {
-  //       // console.log(record.get('Name'));
-  //     });
-  //   });
-  //   }    
-  // }
+  
 
   const handleTitle = (title) => {
     setTitle(title);
   }
 
-  // const handleLogin = (event) => {
-  //   event.preventDefault();
-  //   console.log("logging in...")
-  // }
-
-  // const handleSignup = (event) => {
-  //   event.preventDefault();
-  //   console.log("signing up...")
-  // }
-
-  
+    
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
-  // first API call on app load
-  // useEffect(() => {callApiRandom()}, [])
-  // useEffect(() => {callApiByDate()}, [searchDate]) 
-  // useEffect(() => setItemData(data), [])
-
+  
   // set title of document on page change
   useEffect(() => {document.title = title}, [title])
 
-  // upload data to airtable
+  // upload data to server
   useEffect(() => {
-    // convert like data to string, upload to Airtable
+    // convert like data to string, upload to server
   const updateLikesToServer = async () => {
     const likes = likedItemData;
     if (likes.length > 0) {
@@ -872,12 +741,12 @@ function App() {
 
   }, [likedItemData])
 
-  useEffect(() => updateAlbumsToAirtable(), [albumData])
+  useEffect(() => updateAlbumsToServer(), [albumData])
 
   // set states for likes and albums when airtable string data is received
   useEffect(() => {
     const delay = () => {
-      updateLikesFromServer(); updateAlbumsFromAirtable()
+      updateLikesFromServer(); updateAlbumsFromServer()
     };
     setTimeout(delay, 0);  
 
@@ -944,9 +813,6 @@ function App() {
   }, [feedView])
 
 
- 
-  // useEffect(() => {getUser()}, [])
-
   // --------------------------------------- CONSOLE LOG ----------------------------
   
   
@@ -981,7 +847,7 @@ function App() {
     handleBookmark,
     updateAlbumData,
     handleAlbumTab,
-    updateAlbumsToAirtable,
+    updateAlbumsToServer,
     callApiByDate,
     callApiRandom,
     handleTitle,
