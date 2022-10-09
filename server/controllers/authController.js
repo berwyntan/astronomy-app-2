@@ -23,20 +23,20 @@ const handleLogin = async (req, res) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '1h' }
         );
         const refreshToken = jwt.sign(
             { "username": foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '2d' }
+            { expiresIn: '1d' }
         );
 
         // Saving refreshToken with current user
         foundUser.refreshToken = refreshToken;
         const result = await foundUser.save();
         
-        console.log(`access: ${accessToken}`)
-        console.log(`refresh: ${refreshToken}`)
+        // console.log(`access: ${accessToken}`)
+        // console.log(`refresh: ${refreshToken}`)
 
         // Creates Secure Cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 2 * 24 * 60 * 60 * 1000 });

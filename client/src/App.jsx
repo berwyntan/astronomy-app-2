@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import useRefreshToken from './hooks/useRefreshToken'
 
 import Likes from './layout/Likes'
 import Layout from './layout/Layout'
@@ -88,7 +89,8 @@ function App() {
 
   // login persist using localStorage
   // const [persist, setPersist] = useState(false);
-   
+
+    
   // ------------------------------------ APIs -------------------------------------------
 
   // to provide the API with dates by using dayJS to calculate date subtracting
@@ -674,9 +676,10 @@ function App() {
     })
   }
 
-  // convert album data to string, upload to Airtable
+  // convert album data to string, upload to server
   const updateAlbumsToServer = () => {
     const albums = albumData.albums;
+    
     if (albums.length > 0) {
       const updatedAlbums = JSON.stringify(albums);
       console.log("updating albums to server");
@@ -686,7 +689,10 @@ function App() {
             albums: updatedAlbums
         }),
         {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authDetails?.accessToken}`
+             },
             withCredentials: true
         })
         .then((response) => {
@@ -694,7 +700,13 @@ function App() {
         })
         .catch((error) => {
           console.log(error);
-        })
+          console.log(error.response.status);
+          
+          if (error.response.status === 403) {
+            location.reload();
+            
+          }          
+        })        
     }
   }
   
@@ -725,7 +737,10 @@ function App() {
                 likes: updatedLikes
             }),
             {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${authDetails?.accessToken}`
+                },
                 withCredentials: true
             }
         );
@@ -734,14 +749,20 @@ function App() {
         
     } catch (err) {
         console.log(err);
-    }}
+        
+    } 
+    }
   }
 
   updateLikesToServer();
 
   }, [likedItemData])
 
-  useEffect(() => updateAlbumsToServer(), [albumData])
+  useEffect(() => {
+    
+      updateAlbumsToServer();
+      
+  }, [albumData])
 
   // set states for likes and albums when airtable string data is received
   useEffect(() => {

@@ -50,7 +50,7 @@ export default function Albums() {
 
     // for deleting albums
     useEffect(() => {updateAlbumsToServer
-        (); console.log("Albums updated")}, []);
+        ()}, []);
 
     useEffect(() => {
         const newTitle = "Albums - Astronomy";
