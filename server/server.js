@@ -9,7 +9,7 @@ const corsOptions = require('./config/corsOptions');
 const cookieSession = require("cookie-session");
 const session = require('express-session');
 const sessionOptions = require('./session');
-const passport = require('passport');
+// const passport = require('passport');
 const User = require('./model/User');
 require("./config/passport");
 const credentials = require('./middleware/credentials');
