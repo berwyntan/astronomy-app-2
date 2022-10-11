@@ -6,12 +6,10 @@ const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 
-const cookieSession = require("cookie-session");
 const session = require('express-session');
 const sessionOptions = require('./session');
-// const passport = require('passport');
-const User = require('./model/User');
-require("./config/passport");
+
+// require("./config/passport");
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
@@ -28,22 +26,16 @@ connectDB();
 // middleware
 
 app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://astronomy-app-2.vercel.app');
+    res.setHeader(
+        {
+            'Access-Control-Allow-Origin': 'https://astronomy-app-2.vercel.app',
+            'Access-Control-Allow-Credentials': true
+        }
+        );
     next();
-});
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
-});
+  });
 app.use(cors(corsOptions));
 app.use(credentials);
-// app.use(cookieSession(
-//     {
-//         name: "session",
-//         keys: ["keyboardcat"],
-//         maxAge: 24 * 60 * 60 * 100
-//     }
-// ));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -54,8 +46,7 @@ app.use(morgan('dev'));
 
 // app.use(session(sessionOptions));    
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+
 
 app.use('/random', require('./routes/random'));
 app.use('/latest', require('./routes/latest'));
