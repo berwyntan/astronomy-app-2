@@ -37,6 +37,10 @@ app.use(credentials);
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'https://astronomy-app-2.vercel.app');
+    next();
+  });
 app.use(cookieParser());
 app.use(morgan('dev'));
 
