@@ -131,7 +131,12 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`${import.meta.env.VITE_SERVER}/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    axios.get(`${import.meta.env.VITE_SERVER}/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      }
+    )
     .then(function (response) {
       // handle success
       setItemData(prevData => (
