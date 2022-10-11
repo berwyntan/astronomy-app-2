@@ -26,12 +26,13 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // middleware
-app.use(function(req, res, next) {
-    res.setHeader(
-        {'Access-Control-Allow-Origin': 'https://astronomy-app-2.vercel.app'}
-        );
-    next();
-  });
+app.use(cors(corsOptions));
+// app.use(function(req, res, next) {
+//     res.setHeader(
+//         {'Access-Control-Allow-Origin': 'https://astronomy-app-2.vercel.app'}
+//         );
+//     next();
+//   });
 app.use(credentials);
 // app.use(cookieSession(
 //     {
@@ -40,7 +41,7 @@ app.use(credentials);
 //         maxAge: 24 * 60 * 60 * 100
 //     }
 // ));
-app.use(cors(corsOptions));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
