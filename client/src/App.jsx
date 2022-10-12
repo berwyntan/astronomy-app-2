@@ -97,16 +97,17 @@ function App() {
 
   // login persist using localStorage
 
-  const [persist, setPersist] = useState(true);
+  // const [persist, setPersist] = useState(true);
   
   // useEffect(() => {
 
   //   const delay = () => {
   //     // const persistLocal = localStorage.getItem('persist');    
   //     // console.log(persistLocal)
-  //     setPersist(JSON?.parse(localStorage?.getItem('persist')));
+  //     setPersist(JSON?.parse(localStorage?.getItem('persist')) || false);
+  //     console.log(persist)
   //   }
-  //   setTimeout(delay, 0);
+  //   setTimeout(delay, 5000);
 
   //   return clearTimeout(delay);
     
@@ -945,8 +946,8 @@ function App() {
     authDetails,
     setAuthDetails,
     updateProfilePhoto,
-    persist,
-    setPersist
+    // persist,
+    // setPersist
   }
 
   

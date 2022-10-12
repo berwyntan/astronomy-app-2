@@ -31,7 +31,7 @@ const handleRefreshToken = async (req, res) => {
                 likedItemData: foundUser.likes,
                 albumData: foundUser.albums,
                 profilePhoto: foundUser.profilePhoto,
-                persist: true
+                // persist: req.session.persist
              })
         }
     );

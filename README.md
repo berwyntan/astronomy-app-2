@@ -55,6 +55,8 @@ APOD releases a new photo everyday, since 1996. You can search a photo by date. 
 Users can sign up and login to save likes and albums, and set a custom profile photo.
 The app is still accessible without login, except for the functionality of saving likes and albums. 
 
+<img src="./client/readme/login-required.gif" alt="cypress" width="400">
+
 ### - Custom likes and albums
 You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on MongoDB and will be retrieved when signed in.
 
@@ -67,7 +69,9 @@ If the server successfully verifies the JWT, it will send the user information t
 Routes for every page, that are accessible when page is refreshed or url is typed in.
 
 ### - Automated testing
-Some automated testing using Cypress, like checking infinite scroll, search and signup/login.
+Some automated testing using Cypress, like checking infinite scroll and search.
+
+<img src="./client/readme/cypress-testing.gif" alt="cypress" width="400">
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 

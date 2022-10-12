@@ -29,14 +29,14 @@ connectDB();
 app.use(cors(corsOptions));
 app.use(credentials);
 
-app.use(
-    session({
-      secret: process.env.ACCESS_TOKEN_SECRET, 
-      resave: false, 
-      saveUninitialized: false, 
-      store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL })
-    })
-  );  
+// app.use(
+//     session({
+//       secret: process.env.ACCESS_TOKEN_SECRET, 
+//       resave: false, 
+//       saveUninitialized: false, 
+//       store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL })
+//     })
+//   );  
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

@@ -10,7 +10,7 @@ const useRefreshToken = () => {
         });
         setAuthDetails(prev => {
             // console.log(JSON.stringify(prev));
-            console.log(response.data);
+            // console.log(response.data);
             console.log("refreshed auth details")
             return {
                 ...prev,

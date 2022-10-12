@@ -12,7 +12,7 @@ export default function Login () {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
-    const { setAuthDetails, setPersist, persist } = useAuth();
+    const { setAuthDetails } = useAuth();
 
     const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ export default function Login () {
                 }
             );
             // console.log(JSON.stringify(response?.data));
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
             const accessToken = response?.data?.accessToken;
             // console.log(accessToken)
             
@@ -76,10 +76,11 @@ export default function Login () {
         }        
     };
 
-    const handlePersist = (event) => {
-        // console.log(event.target.checked);
-        setPersist(event.target.checked);        
-    }
+    // const handlePersist = (event) => {
+    //     // console.log(event.target.checked);
+    //     setPersist(event.target.checked);
+    //     // localStorage.setItem('persist', persist)        
+    // }
 
     // clear err msg when user retypes form
     useEffect(() => {
@@ -87,10 +88,10 @@ export default function Login () {
     }, [userName, password])
 
     // save persist boolean to localStorage
-    useEffect(() => {
-        console.log(persist);
-        localStorage.setItem('persist', persist);
-    }, [persist])
+    // useEffect(() => {
+    //     console.log(persist);
+    //     localStorage.setItem('persist', persist);
+    // }, [persist])
 
     return(
                 
@@ -124,11 +125,11 @@ export default function Login () {
             <button type="submit" className="btn w-full max-w-xs mt-4 mb-2">LOG IN</button>
             <p className="text-red-600 text-sm">{errorMsg}</p>
 
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
                 <input type="checkbox" className="checkbox mr-2" onChange={handlePersist} 
                     checked={ persist ? "checked" : "" } />
                 Stay logged in.
-            </div> 
+            </div>   */}
 
             <div className="ml-6 mt-4">
                 Don't have an account? <Link to="/signup" className="link link-hover dark:text-slate-50">
@@ -137,11 +138,6 @@ export default function Login () {
             </div>
             
         </form>
-
-        {/* <div className="w-full max-w-xs mt-4 ml-10">
-            <div className="divider">OR</div> 
-            <button className="btn w-full max-w-xs mt-2" onClick={authGoogle}>LOG IN W GOOGLE</button>
-        </div>         */}
         
 
         </div>

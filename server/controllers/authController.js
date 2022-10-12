@@ -45,12 +45,12 @@ const handleLogin = async (req, res) => {
         const albumData = foundUser.albums;
         const profilePhoto = foundUser.profilePhoto;
 
-        req.session.cookie = {
-            sameSite: "None",
-            secure: true,
-            maxAge: 2 * 24 * 60 * 60 * 1000
-        }
-        req.session.persist = "true"
+        // req.session.cookie = {
+        //     sameSite: "None",
+        //     secure: true,
+        //     maxAge: 2 * 24 * 60 * 60 * 1000
+        // }
+        // req.session.persist = persist;
 
         res.json({ 
             message: `user ${user} successfully logged in`,
@@ -58,8 +58,8 @@ const handleLogin = async (req, res) => {
             albumData: albumData,
             accessToken: accessToken,
             profilePhoto: profilePhoto,
-            persist: req.session.persist,
-            cookie: req.session
+            // persist: req.session.persist,
+            // cookie: req.session
          });
     } else {
         res.sendStatus(401);
