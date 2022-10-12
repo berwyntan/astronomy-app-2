@@ -22,11 +22,13 @@ import './App.css'
 import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
+import dayjsPluginUTC from 'dayjs-plugin-utc'
 import { debounce } from 'lodash'
 
 export const DataContext = createContext();
 export const AuthContext = createContext();
 
+dayjs.extend(dayjsPluginUTC);
 
 function App() {
   
@@ -38,8 +40,8 @@ function App() {
   // to get todays date and date 10 days ago for the API
   const [dateStringForApi, setDateStringForApi] = useState({  
     // get date 10 days before today then format date in YYYY-MM-DD  
-    startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
-    endDateString: dayjs().format("YYYY-MM-DD"),    
+    startDateString: dayjs(dayjs.utc().subtract(10, "day")).format("YYYY-MM-DD"),    
+    endDateString: dayjs.utc().format("YYYY-MM-DD"),    
     offset: 11,
   })
   const [likedItemData, setLikedItemData] = useState([])
@@ -94,8 +96,22 @@ function App() {
   })
 
   // login persist using localStorage
-  // const [persist, setPersist] = useState(false);
 
+  const [persist, setPersist] = useState(true);
+  
+  // useEffect(() => {
+
+  //   const delay = () => {
+  //     // const persistLocal = localStorage.getItem('persist');    
+  //     // console.log(persistLocal)
+  //     setPersist(JSON?.parse(localStorage?.getItem('persist')));
+  //   }
+  //   setTimeout(delay, 0);
+
+  //   return clearTimeout(delay);
+    
+  // }, [])   
+  
     
   // ------------------------------------ APIs -------------------------------------------
 
@@ -928,7 +944,9 @@ function App() {
   const auth = {    
     authDetails,
     setAuthDetails,
-    updateProfilePhoto
+    updateProfilePhoto,
+    persist,
+    setPersist
   }
 
   

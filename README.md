@@ -1,8 +1,14 @@
 # Astronomy Photo App
-An Instagram / Pinterest clone that uses NASA's APOD API to browse astronomy photos. This is a front-end single page app that applies CRUD and uses Airtable to store likes and albums.
-It is my second project for General Assembly's Software Engineering Immersive Flex program.
 
-## Libraries / API Used
+An Instagram / Pinterest clone that uses NASA's APOD API to browse astronomy photos. This is a single page app running on the MERN stack.
+It is an improvement to my second project for General Assembly's Software Engineering Immersive Flex program.
+
+Original frontend project on Github:
+https://github.com/berwyntan/astronomy-photo-app
+
+## Libraries / API Used - Frontend
+
+- [NASA APOD API](https://github.com/nasa/apod-api)
 
 - [React built using ViteJS](https://vitejs.dev/)
 - [React router](https://reactrouter.com/en/main)
@@ -14,8 +20,6 @@ It is my second project for General Assembly's Software Engineering Immersive Fl
 - [DayJS](https://day.js.org/)
 - [Lodash](https://lodash.com/)
 - [Lozad](https://apoorv.pro/lozad.js/)
-
-- [NASA APOD API](https://github.com/nasa/apod-api)
 
 ---
 
@@ -35,46 +39,61 @@ When the user is scrolling through a lot of photos and wishes to switch between 
 
 This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#last-interacted-post))
 
-<img src="./readme/handle-last-interaction.gif" alt="handle-last-interaction" width="400">
+<img src="./client/readme/handle-last-interaction.gif" alt="handle-last-interaction" width="400">
 
 ### - Infinite scroll
 Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#infinite-scroll))
 
-<img src="./readme/infinite-scroll.gif" alt="infinite-scroll" width="400">
+<img src="./client/readme/infinite-scroll.gif" alt="infinite-scroll" width="400">
 
 ### - Search by date
 APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides searching for that photo, the app will also show the ten previous photos before the search date. Infinite scroll is also enabled in search mode.
 
-<img src="./readme/search.gif" alt="search" width="400">
+<img src="./client/readme/search.gif" alt="search" width="400">
+
+### - Authentication
+Users can sign up and login to save likes and albums, and set a custom profile photo.
+The app is still accessible without login, except for the functionality of saving likes and albums. 
 
 ### - Custom likes and albums
-You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on Airtable and will be retrieved when the app loads.
+You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on MongoDB and will be retrieved when signed in.
+
+### - Persistent login using HTTP only cookies
+Upon authentication, the server issues a HTTP only cookie that expires in 2 days. Whenever the user refreshes the app, the server checks the JWT before allowing access to the protected routes.
+
+If the server successfully verifies the JWT, it will send the user information to the client side (excluding the password). Client side protects routes by checking whether the state `authDetails` contains any user info.
+
+### - Individual routes
+Routes for every page, that are accessible when page is refreshed or url is typed in.
+
+### - Automated testing
+Some automated testing using Cypress, like checking infinite scroll, search and signup/login.
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 
-<img src="./readme/responsive.gif" alt="responsive" width="400">
+<img src="./client/readme/responsive.gif" alt="responsive" width="400">
 
 The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That means having to set dark mode CSS for every element.
 
-<img src="./readme/light-dark-mode.gif" alt="light-dark-mode" width="400">
+<img src="./client/readme/light-dark-mode.gif" alt="light-dark-mode" width="400">
 
 ---
 
 ## Deployment
 
-https://astronomy-photo-app.vercel.app/
+http://astronomy-app-2.vercel.app/
 
 ---
 
 ## Wireframe
 
-<img src="./readme/wireframe.jpg" alt="wireframe" width="600">
+<img src="./client/readme/wireframe.jpg" alt="wireframe" width="600">
 
 *Figure 1: Wireframe*
 
 ## Component Design
 
-<img src="./readme/component-design.png" alt="component-design">
+<img src="./client/readme/component-design.png" alt="component-design">
 
 *Figure 2: Component Hierarchy*
 
@@ -156,20 +175,6 @@ This code is placed in a `useEffect` hook with the state `feedView` as the depen
     }, [feedView])
 
 
-### Retrieving from and saving data to Airtable
-
-#### Retrieving
-
-There is a useEffect on app load that calls the Airtable database and retrieves the album and likes data in string format and sets the data into the state `airtableData`. Conditional statements check which data is for albums and for likes.
-
-The functions `updateLikesFromAirtable` and `updateAlbumsFromAirtable` parse the data into JSON format and then update the states containing the likes, `likedItemData` and albums, `albumData`. This is only done once, on load with a useEffect using `airtableData` as the dependency array.
-
-#### Updating
-
-The functions `updateLikesToAirtable` and `updateAlbumsToAirtable` cannot be run on load as the likes and albums states are empty. Then the data on Airtable will be erased. 
-
-Likes are updated whenever whether a post is liked/unliked. Albums are updated when the user adds, renames, deletes an album or adds/removes a photo from album.
-
 ---
 
 ### References
@@ -188,5 +193,11 @@ https://github.com/Airtable/airtable.js/issues/246
 Passing functions with useContext:
 https://stackoverflow.com/questions/62366824/how-can-%C4%B1-pass-function-with-state-for-react-usecontext
 
+Individual routes when deploying on Vercel:
+https://stackoverflow.com/questions/64815012/why-does-react-router-not-works-at-vercel
 
+Setting up the server using Express, authentication using JWTs for both client and server:
+https://www.youtube.com/c/DaveGrayTeachesCode
 
+Testing infinite scroll with Cypress:
+https://stackoverflow.com/questions/56601826/cypress-testing-how-to-compare-count-of-elements-before-after-ajax-call

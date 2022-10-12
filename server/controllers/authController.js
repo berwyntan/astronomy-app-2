@@ -28,7 +28,7 @@ const handleLogin = async (req, res) => {
         const refreshToken = jwt.sign(
             { "username": foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '2d' }
         );
 
         // Saving refreshToken with current user
@@ -44,12 +44,22 @@ const handleLogin = async (req, res) => {
         const likedItemData = foundUser.likes;
         const albumData = foundUser.albums;
         const profilePhoto = foundUser.profilePhoto;
+
+        req.session.cookie = {
+            sameSite: "None",
+            secure: true,
+            maxAge: 2 * 24 * 60 * 60 * 1000
+        }
+        req.session.persist = "true"
+
         res.json({ 
             message: `user ${user} successfully logged in`,
             likedItemData: likedItemData,
             albumData: albumData,
             accessToken: accessToken,
-            profilePhoto: profilePhoto
+            profilePhoto: profilePhoto,
+            persist: req.session.persist,
+            cookie: req.session
          });
     } else {
         res.sendStatus(401);

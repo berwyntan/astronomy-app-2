@@ -10,7 +10,7 @@ const useRefreshToken = () => {
         });
         setAuthDetails(prev => {
             // console.log(JSON.stringify(prev));
-            // console.log(response.data);
+            console.log(response.data);
             console.log("refreshed auth details")
             return {
                 ...prev,
@@ -19,7 +19,8 @@ const useRefreshToken = () => {
                 userName: response.data.userName,
                 likedItemData: response.data.likedItemData,
                 albumData: response.data.albumData,
-                profilePhoto: response.data.profilePhoto
+                profilePhoto: response.data.profilePhoto,
+                
             }
         });
         return response.data.accessToken;

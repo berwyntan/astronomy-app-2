@@ -8,6 +8,7 @@ const corsOptions = require('./config/corsOptions');
 
 const session = require('express-session');
 const sessionOptions = require('./session');
+const MongoStore = require('connect-mongo');
 
 // require("./config/passport");
 const credentials = require('./middleware/credentials');
@@ -25,18 +26,24 @@ connectDB();
 
 // middleware
 
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", origin);
-//     res.header("Access-Control-Allow-Credentials", true);
-//     next();
-//   });
 app.use(cors(corsOptions));
 app.use(credentials);
+
+app.use(
+    session({
+      secret: process.env.ACCESS_TOKEN_SECRET, 
+      resave: false, 
+      saveUninitialized: false, 
+      store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL })
+    })
+  );  
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(cookieParser());
+
+
 app.use(morgan('dev'));
 
 
