@@ -52,10 +52,45 @@ describe('My First Test', () => {
         
         cy.contains('Feed').click()
 
-        cy.wait(3111)
+        cy.wait(4111)
         cy.get('.ml-5')
-        .children().first().should('have.id', '2020-01-10')
-        
+        .children().first().should('have.id', '2020-01-10')        
+      });
+      it('Go to Likes without login', () => {
+        cy.wait(1111)
+
+        cy.contains('Likes').click()
+        cy.url().should('include', '/login')
+      });
+      it('Go back to Latest and try to like and save the first post', () => {
+        cy.wait(1111)
+
+        cy.contains('Latest').click()
+        cy.wait(3111)
+
+        // get first like button and click
+        cy.get('.ml-5')
+        .children().first().children().get('.btn').first().click()
+
+        // check the like button img, it should be an empty heart
+        cy.get('.ml-5')
+        .children().first().children().get('.btn').first()
+        .children().should('have.attr', 'src').should('include', '/src/icons/heart-empty.svg')
+
+        // get the first bookmark button and click
+        cy.get('.ml-5')
+        .children().first().children().get('.dropdown.dropdown-right').children().children().first().click()
+
+        // check that the first album dropdown does not exist
+        cy.get('.ml-5')
+        .children().first().children().get('.dropdown.dropdown-right')
+        .get('.dropdown-content').should('not.exist')
+      });
+      it('Go to Albums without login', () => {
+        cy.wait(1111)
+
+        cy.contains('Albums').click()
+        cy.url().should('include', '/login')
       });
 })
     
