@@ -307,6 +307,7 @@ function App() {
     }
     if (mode.search || mode.saves) {
       console.log("searching latest")
+      unloadGridSingleView()
       setDateStringForApi({  
         // reset to initial values  
         startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
@@ -355,7 +356,7 @@ function App() {
     setCardGridSingle(prevState => {
       return ({
         ...prevState,
-        selected: !prevState.selected,
+        selected: false, //!prevState.selected,
         item: null
       })      
     })

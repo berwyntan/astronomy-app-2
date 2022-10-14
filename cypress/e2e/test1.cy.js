@@ -14,11 +14,11 @@ describe('My First Test', () => {
     });
     it('Check Infinity Scroll', () => {
         const selector = "div.grid"
-        cy.wait(500)
+        cy.wait(2111)
         cy.get(selector).then($els => {
             const initialCount = $els.length
             cy.scrollTo("bottom", { duration: 1000 });
-            cy.wait(2111)
+            cy.wait(4111)
 
             cy.get(selector).then($els2 => {
             const currentCount = $els2.length
@@ -46,7 +46,7 @@ describe('My First Test', () => {
         .should('be.visible')
         .select('2020')
 
-        cy.wait(2111)
+        cy.wait(3111)
         cy.get('.react-datepicker__day--010')
         .click()
         
@@ -87,10 +87,150 @@ describe('My First Test', () => {
         .get('.dropdown-content').should('not.exist')
       });
       it('Go to Albums without login', () => {
-        cy.wait(1111)
+        cy.wait(2111)
 
         cy.contains('Albums').click()
         cy.url().should('include', '/login')
+      });
+      it('Attempt to login using unregistered username: TesterASDFG and password: asdf', () => {
+        cy.get('input').first().type('TesterASDFG')
+        cy.get('input').first().should('have.value', 'TesterASDFG')
+        cy.get('input[placeholder="password"]').type('asdf')
+        cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+        cy.get('button[type="submit"]').click()
+
+        cy.wait(1111)
+        cy.get('.text-red-600').should('have.text', 'Incorrect Username or Password')
+      });
+      it('Signup using username: TesterASDFG and password: asdf', () => {
+        cy.contains('Create one').click()
+        cy.url().should('include', '/signup')
+
+        cy.get('input').first().type('TesterASDFG')
+        cy.get('input').first().should('have.value', 'TesterASDFG')
+        cy.get('input[placeholder="password"]').type('asdf')
+        cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+        cy.get('button[type="submit"]').click()
+
+        cy.wait(1111)
+        cy.url().should('include', '/login')
+      });
+      it('Attempt to login using signed up username: TesterASDFG and password: asdf', () => {
+        cy.get('input').first().type('TesterASDFG')
+        cy.get('input').first().should('have.value', 'TesterASDFG')
+        cy.get('input[placeholder="password"]').type('asdf')
+        cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+        cy.get('button[type="submit"]').click()
+
+        cy.wait(1111)
+        cy.get('.rounded-full').should('exist')
+      });
+      it('Like the first post, then check likes, logout/login and check again', () => {
+        cy.wait(2111)
+
+        // get first like button and click
+        cy.get('.ml-5')
+        .children().first().children().get('.btn-square').first().click()
+        cy.wait(2111)
+        // check the like button img, it should be a solid heart
+        cy.get('.ml-5')
+        .children().first().children().get('.btn-square').first()
+        .children().should('have.attr', 'src').should('include', '/src/icons/heart-solid.svg')
+        
+        // get id of liked post, then go to likes to verify
+        cy.get('.ml-5')
+        .children().first()
+        .invoke('attr', 'id')
+        .then((id) => {
+          cy.log(id)
+          cy.contains('Likes').click()
+          cy.wait(1111)
+          cy.url().should('include', '/likes')
+          cy.get('.ml-5').children().first().should('have.attr', 'id').should('equal', id)
+
+          // log out
+          cy.get('.dropdown-end').click()
+          cy.get('ul.menu').children().next().click()
+
+          cy.wait(1111)
+          cy.get('.rounded-full').should('not.exist')
+
+          // log in
+          cy.contains('Likes').click()
+          cy.url().should('include', '/login')
+
+          cy.get('input').first().type('TesterASDFG')
+          cy.get('input').first().should('have.value', 'TesterASDFG')
+          cy.get('input[placeholder="password"]').type('asdf')
+          cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+          cy.get('button[type="submit"]').click()
+
+          cy.wait(2111)
+          cy.get('.rounded-full').should('exist')
+
+          // check likes
+          cy.contains('Likes').click()
+          cy.wait(2111)
+          cy.url().should('include', '/likes')
+          cy.get('.ml-5').children().first().should('have.attr', 'id').should('equal', id)
+
+        })
+      });
+      it('Check grid and grid selection in likes', () => {
+        cy.contains('Grid').click()
+        cy.wait(1111)
+        cy.get('.grid').should('exist')
+
+        cy.get('.grid').children().first().click()
+        cy.wait(2111)
+        cy.get('div.w-screen').should('exist')
+
+        // close grid selection
+        cy.get('button[data-cy="close"]').click()
+        cy.get('.rounded-full').should('exist')
+
+      });
+      it('Check removing like', () => {
+        cy.wait(1111)
+        cy.get('.grid').children().first().click()
+        cy.wait(1111)
+        cy.get('div.w-screen').should('exist')
+
+        // unlike
+        cy.get('button[data-cy="unlike"]').click()
+
+        // close grid selection
+        // cy.get('button[data-cy="close"]').click()
+        
+        cy.wait(1111)
+        cy.get('.rounded-full').should('exist')
+
+        cy.get('div.grid').should('not.exist')
+      });
+      it('Log out and delete TesterASDFG from MongoDB', () => {
+
+        cy.get('.dropdown-end').click()
+        cy.get('ul.menu').children().next().click()
+
+        cy.wait(1111)
+        cy.get('.rounded-full').should('not.exist')
+
+        cy.deleteOne({ username: "TesterASDFG" }, {collection: 'users', database: 'test'}).then(res => {
+          cy.log(res); // prints 1 (or 0) document deleted
+      });
+      });
+      it('Attempt to login using unregistered username: TesterASDFG and password: asdf', () => {
+        cy.contains('Login').click()
+        cy.url().should('include', '/login')
+
+        cy.get('input').first().type('TesterASDFG')
+        cy.get('input').first().should('have.value', 'TesterASDFG')
+        cy.get('input[placeholder="password"]').type('asdf')
+        cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+        cy.get('button[type="submit"]').click()
+
+        cy.wait(1111)
+        cy.get('.text-red-600').should('have.text', 'Incorrect Username or Password')
       });
 })
     

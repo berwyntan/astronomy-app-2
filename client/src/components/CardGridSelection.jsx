@@ -33,16 +33,18 @@ export default function CardGridSelection() {
                 <div className='flex items-center'>
                     <h3 className="text-lg font-semibold ml-2">{cardGridSingle.item.title}</h3>
                     <button className="btn btn-square btn-ghost dark:invert" 
-                            onClick={unloadGridSingleView}>
+                            onClick={unloadGridSingleView}
+                            data-cy="close" //for cypress testing
+                            >
                         <img className="h-6" src={close} />
                     </button>
                 </div>
                 <div className='flex items-center'>
                     {like ? 
-                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)}>
+                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)} data-cy="unlike">
                         <img className="h-5" src={heartSolid} />
                     </button> :
-                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)}>
+                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)} data-cy="unlike">
                         <img className="h-5" src={heartEmpty} />
                     </button> 
                     }
