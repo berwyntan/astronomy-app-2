@@ -207,13 +207,30 @@ describe('My First Test', () => {
 
         cy.get('div.grid').should('not.exist')
       });
-      it('Log out and delete TesterASDFG from MongoDB', () => {
+      it('Log out and try to sign up TesterASDFG again', () => {
 
         cy.get('.dropdown-end').click()
         cy.get('ul.menu').children().next().click()
 
         cy.wait(1111)
         cy.get('.rounded-full').should('not.exist')
+
+        cy.contains('Login').click()
+        cy.url().should('include', '/login')
+
+        cy.contains('Create one').click()
+        cy.url().should('include', '/signup')
+
+        cy.get('input').first().type('TesterASDFG')
+        cy.get('input').first().should('have.value', 'TesterASDFG')
+        cy.get('input[placeholder="password"]').type('asdf')
+        cy.get('input[placeholder="password"]').should('have.value', 'asdf')
+        cy.get('button[type="submit"]').click()
+
+        cy.wait(1111)
+        cy.get('.text-red-600').should('have.text', 'Username already taken')      
+      });
+      it('Delete TesterASDFG from MongoDB', () => {
 
         cy.deleteOne({ username: "TesterASDFG" }, {collection: 'users', database: 'test'}).then(res => {
           cy.log(res); // prints 1 (or 0) document deleted

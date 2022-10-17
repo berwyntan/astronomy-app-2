@@ -69,6 +69,8 @@ export default function Login () {
                 setErrorMsg("Missing Username or Password");
             } else if (err.response?.status === 401) {
                 setErrorMsg("Incorrect Username or Password");
+            } else if (err.response?.status === 409) {
+                setErrorMsg("Username already taken");
             } else {
                 setErrorMsg("Login Failed");
             }
