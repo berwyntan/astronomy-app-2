@@ -39,23 +39,23 @@ When the user is scrolling through a lot of photos and wishes to switch between 
 
 This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#last-interacted-post))
 
-<img src="./client/readme/handle-last-interaction.gif" alt="handle-last-interaction" width="400">
+<img src="https://imgur.com/yvd7Ekm" alt="handle-last-interaction" width="400">
 
 ### - Infinite scroll
 Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#infinite-scroll))
 
-<img src="./client/readme/infinite-scroll.gif" alt="infinite-scroll" width="400">
+<img src="https://imgur.com/lGpANdO" alt="infinite-scroll" width="400">
 
 ### - Search by date
 APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides searching for that photo, the app will also show the ten previous photos before the search date. Infinite scroll is also enabled in search mode.
 
-<img src="./client/readme/search.gif" alt="search" width="400">
+<img src="https://imgur.com/dvXY6JT" alt="search" width="400">
 
 ### - Authentication
 Users can sign up and login to save likes and albums, and set a custom profile photo.
 The app is still accessible without login, except for the functionality of saving likes and albums. 
 
-<img src="./client/readme/login-required.gif" alt="cypress" width="400">
+<img src="https://imgur.com/oTc1Fgr" alt="cypress" width="400">
 
 ### - Custom likes and albums
 You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on MongoDB and will be retrieved when signed in.
@@ -71,15 +71,15 @@ Routes for every page, that are accessible when page is refreshed or url is type
 ### - Automated testing
 Some automated testing using Cypress, like checking infinite scroll and search.
 
-<img src="./client/readme/cypress-testing.gif" alt="cypress" width="400">
+<img src="https://imgur.com/7Io1YQx" alt="cypress" width="400">
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 
-<img src="./client/readme/responsive.gif" alt="responsive" width="400">
+<img src="https://imgur.com/4ztmQBn" alt="responsive" width="400">
 
 The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That means having to set dark mode CSS for every element.
 
-<img src="./client/readme/light-dark-mode.gif" alt="light-dark-mode" width="400">
+<img src="https://imgur.com/nK87sLw" alt="light-dark-mode" width="400">
 
 ---
 
@@ -91,13 +91,13 @@ http://astronomy-app-2.vercel.app/
 
 ## Wireframe
 
-<img src="./client/readme/wireframe.jpg" alt="wireframe" width="600">
+<img src="https://imgur.com/70nBKfQ" alt="wireframe" width="600">
 
 *Figure 1: Wireframe*
 
 ## Component Design
 
-<img src="./client/readme/component-design.png" alt="component-design">
+<img src="https://imgur.com/vNpiqDP" alt="component-design">
 
 *Figure 2: Component Hierarchy*
 
