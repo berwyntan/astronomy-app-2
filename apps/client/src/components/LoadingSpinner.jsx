@@ -6,7 +6,7 @@ export default function LoadingSpinner() {
             <Circles
             height="80"
             width="80"
-            color="#4fa94d"
+            color="white"
             ariaLabel="circles-loading"
             wrapperStyle={{}}
             wrapperClass=""
