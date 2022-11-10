@@ -5,9 +5,13 @@
     "start": "cd apps/server && npm run start"
   },
   "devDependencies": {
+    "cypress": "^11.0.1",
     "turbo": "^1.6.3"
   },
   "workspaces": [
-    "apps/*"    
-  ]
+    "apps/*"
+  ],
+  "dependencies": {
+    "cypress-mongodb": "^5.1.2"
+  }
 }
