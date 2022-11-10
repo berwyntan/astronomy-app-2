@@ -1,9 +1,13 @@
 {
-  "devDependencies": {
-    "cypress": "^10.9.0"
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "cd apps/server && npm run start"
   },
-  "dependencies": {
-    "cypress-mongodb": "^5.1.1",
-    "dotenv": "^16.0.3"
-  }
+  "devDependencies": {
+    "turbo": "^1.6.3"
+  },
+  "workspaces": [
+    "apps/*"    
+  ]
 }

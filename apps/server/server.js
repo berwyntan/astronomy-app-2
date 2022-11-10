@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // middleware
-
+app.use(express.static("../client/dist"));
 app.use(cors(corsOptions));
 app.use(credentials);
 
@@ -57,6 +57,10 @@ app.use('/signup', require('./routes/signup'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
+
+app.get("/*", (req, res) => {
+    res.sendFile(path.resolve("../client/dist/index.html"));
+  });
 
 app.use(verifyJWT);
 app.use('/update', require('./routes/update'));
