@@ -20,7 +20,7 @@ import data from './data/sampleData'
 import './App.css'
 
 import lozad from 'lozad'
-import axios from 'axios'
+import axios from './api/axios'
 import dayjs from 'dayjs'
 import dayjsPluginUTC from 'dayjs-plugin-utc'
 import { debounce } from 'lodash'
@@ -148,7 +148,7 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`${import.meta.env.VITE_SERVER}/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`,
+    axios.get(`/latest?start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`,
       {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
@@ -183,7 +183,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get(`${import.meta.env.VITE_SERVER}/random`)
+    axios.get(`/random`)
     .then(function (response) {
       // handle success
       // console.log(response.data);
@@ -712,7 +712,7 @@ function App() {
     if (albums.length > 0) {
       const updatedAlbums = JSON.stringify(albums);
       // console.log("updating albums to server");
-      axios.put(`${import.meta.env.VITE_SERVER}/update/albums`, 
+      axios.put(`/update/albums`, 
         JSON.stringify({ 
             user: authDetails.userName,
             albums: updatedAlbums
@@ -753,7 +753,7 @@ function App() {
       profilePhoto: url
     }))
 
-    axios.put(`${import.meta.env.VITE_SERVER}/update/profile`, 
+    axios.put(`/update/profile`, 
         JSON.stringify({ 
             user: authDetails.userName,
             profilePhoto: authDetails.profilePhoto
@@ -795,7 +795,7 @@ function App() {
       const updatedLikes = JSON.stringify(likes);
       // console.log("updating likes to server");
       try {
-        const response = await axios.put(`${import.meta.env.VITE_SERVER}/update/likes`, 
+        const response = await axios.put(`/update/likes`, 
             JSON.stringify({ 
                 user: authDetails.userName,
                 likes: updatedLikes

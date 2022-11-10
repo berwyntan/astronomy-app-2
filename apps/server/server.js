@@ -52,24 +52,24 @@ app.use(morgan('dev'));
 
 
 
-app.use('/undefined/random', require('./routes/random'));
-app.use('/undefined/latest', require('./routes/latest'));
-app.use('/undefined/signup', require('./routes/signup'));
-app.use('/undefined/auth', require('./routes/auth'));
-app.use('/undefined/refresh', require('./routes/refresh'));
-app.use('/undefined/logout', require('./routes/logout'));
+app.use('/random', require('./routes/random'));
+app.use('/latest', require('./routes/latest'));
+app.use('/signup', require('./routes/signup'));
+app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
 
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve("../client/dist/index.html"));
   });
 
 app.use(verifyJWT);
-app.use('/undefined/update', require('./routes/update'));
+app.use('/update', require('./routes/update'));
 
 // routes
-app.get("/", (req, res) => {
-    res.json({ message: "hello world" })
-});
+// app.get("/", (req, res) => {
+//     res.json({ message: "hello world" })
+// });
 
 
 mongoose.connection.once('open', () => {
