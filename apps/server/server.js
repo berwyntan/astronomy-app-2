@@ -67,9 +67,9 @@ app.use(verifyJWT);
 app.use('/update', require('./routes/update'));
 
 // routes
-// app.get("/", (req, res) => {
-//     res.json({ message: "hello world" })
-// });
+app.get("/", (req, res) => {
+    res.json({ message: "hello world" })
+});
 
 
 mongoose.connection.once('open', () => {
