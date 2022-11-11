@@ -87,7 +87,7 @@ The app will display light or dark mode depending on your system preferences. Ho
 
 ## Deployment
 
-http://astronomy-app-2.vercel.app/
+https://pink-delightful-hedgehog.cyclic.app/
 
 ---
 
@@ -99,7 +99,9 @@ http://astronomy-app-2.vercel.app/
 
 ## Component Design
 
-<img src="https://imgur.com/vNpiqDP" alt="component-design">
+<!-- <img src="https://imgur.com/vNpiqDP" alt="component-design"> -->
+
+![Imgur](https://imgur.com/vNpiqDP)
 
 *Figure 2: Component Hierarchy*
 
