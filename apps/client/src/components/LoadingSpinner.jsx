@@ -2,7 +2,8 @@ import { Circles } from 'react-loader-spinner'
 
 export default function LoadingSpinner() {
     return (
-        <div className='ml-30'>
+        <>
+        <span className='ml-30'>
             <Circles
             height="80"
             width="80"
@@ -12,6 +13,18 @@ export default function LoadingSpinner() {
             wrapperClass=""
             visible={true}
             />
-        </div>
+        </span>
+        <span className='ml-30'>
+            <Circles
+            height="80"
+            width="80"
+            color="black"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            />
+        </span>
+        </>
     )
 }
