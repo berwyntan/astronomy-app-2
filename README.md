@@ -71,7 +71,7 @@ Routes for every page, that are accessible when page is refreshed or url is type
 ### - Automated testing
 Some automated testing using Cypress, like checking infinite scroll and search.
 
-<!-- <img src="https://imgur.com/7Io1YQx" alt="cypress" width="400"> -->
+<img src="https://www.dropbox.com/s/vo62rd1hu28g57j/cypress-testing.gif?dl=0" alt="cypress" width="400">
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 
