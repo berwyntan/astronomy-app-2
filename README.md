@@ -71,8 +71,6 @@ Routes for every page, that are accessible when page is refreshed or url is type
 ### - Automated testing
 Some automated testing using Cypress, like checking infinite scroll and search.
 
-<img src="https://uc1c90eccaa5024d2ff15fcf2b58.previews.dropboxusercontent.com/p/thumb/ABssytd2mZy5xMvv72tafyTxqKePg1nUsyKxGhaF_MdDTxSIxMe4Jia9js-zax5IOPLPF4EK_lENGu_j2XfJT7J11PjEl5jxQ-Rxdw3YwFykcHFKcQ1vyVD-IPPJq-uK7Y-2jQBKYkedwI3fwBi0MCt9K7G9-hq0FXeFaStPCNtNRfl6ZfXqf5ZkI8NKb1oqEnO3LtPxJa_xo40uwIErihEXZ72kDoprQWjAgV0eOcLnZa4CxMg5A8eIAV4CKdSYjE3TyiE8jYiGbmBssIllGX_19JzlHWyewtGCbcSbbTuwNfYlkDS9UVydsrEmaxxpkh6fTv6PBv6q1aBuA3yWYqnqACi_bA6mFUUj9V2TMgPBfIXOwGcBOjbwXt3oWR_35mNppALQfjOvkS_Zie_ksphZoLEH67DkrcI2wEiTFRcRbHtPJx1ckezxOgi9gYFoKq5P0S0rENjfYYPWV3QlDaBvMZZ9ogjDP4iJi62ARnwWfS2BftjQLNl2S1J6sZrzOv4s1YuNn0A-avCrxJsrJKcvrGPvjGAXJv5gAuP4NEaUqA/p.gif" alt="cypress" width="400">
-
 ### - Responsive design (desktop only) + Light and dark mode compatible
 
 <img src="https://github.com/berwyntan/astronomy-photo-app/blob/main/readme/responsive.gif" alt="responsive" width="400">
@@ -97,7 +95,7 @@ https://pink-delightful-hedgehog.cyclic.app/
 
 ## Component Design
 
-<img src="https://imgur.com/vNpiqDP" alt="component-design">
+<img src="https://github.com/berwyntan/astronomy-photo-app/raw/main/readme/component-design.png" alt="component-design">
 
 <!-- ![Imgur](https://imgur.com/vNpiqDP) -->
 
