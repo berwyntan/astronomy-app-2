@@ -39,9 +39,7 @@ When the user is scrolling through a lot of photos and wishes to switch between 
 
 This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#last-interacted-post))
 
-<img src="https://imgur.com/yvd7Ekm" alt="handle-last-interaction" width="400">
-
-![Imgur](https://imgur.com/yvd7Ekm)
+<img src="https://github.com/berwyntan/astronomy-photo-app/blob/main/readme/handle-last-interaction.gif" alt="handle-last-interaction" width="400">
 
 ### - Infinite scroll
 Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#infinite-scroll))
