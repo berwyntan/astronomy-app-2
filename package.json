@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "start": "cd apps/server && npm start"
+    "start": "cd apps/server && node server.js"
   },
   "devDependencies": {
     "cypress": "^11.0.1",
