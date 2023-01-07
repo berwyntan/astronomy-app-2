@@ -1,21 +1,14 @@
-import { useState, useEffect, createContext } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import useRefreshToken from './hooks/useRefreshToken'
+import { useState, useEffect, createContext, lazy } from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Likes from './layout/Likes'
 import Layout from './layout/Layout'
-import Albums from './layout/Albums'
-import Album from './layout/Album'
 import Search from './layout/Search'
 import Shuffle from './layout/Shuffle'
 import Latest from './layout/Latest'
-import NotFound from './layout/NotFound'
 import RequireAuth from './layout/RequireAuth'
 import Login from './layout/Login'
 import Signup from './layout/Signup'
 import PersistLogin from './layout/PersistLogin'
-
-import data from './data/sampleData'
 
 import './App.css'
 
@@ -23,12 +16,16 @@ import lozad from 'lozad'
 import axios from './api/axios'
 import dayjs from 'dayjs'
 import dayjsPluginUTC from 'dayjs-plugin-utc'
-import { debounce } from 'lodash'
 
 export const DataContext = createContext();
 export const AuthContext = createContext();
 
 dayjs.extend(dayjsPluginUTC);
+
+const Likes = lazy(() => import('./layout/Likes'))
+const Albums = lazy(() => import('./layout/Albums'))
+const Album = lazy(() => import('./layout/Album'))
+const NotFound = lazy(() => import('./layout/NotFound'))
 
 function App() {
   
@@ -83,6 +80,18 @@ function App() {
   // to dynamically change document title
   const [title, setTitle] = useState("Astronomy")
 
+  // debounce function
+  const debounce = (func, delay) => {
+    let debounceTimer
+    return function() {
+        const context = this
+        const args = arguments
+            clearTimeout(debounceTimer)
+                debounceTimer
+            = setTimeout(() => func.apply(context, args), delay)
+    }
+}
+
   // ---------------------------- AUTH -------------------------------------------
 
   // check if user is logged in
@@ -122,13 +131,13 @@ function App() {
     const offset = dateStringForApi.offset
     
     const endDateString = dayjs(dayjs().subtract(offset, "day")).format("YYYY-MM-DD")
-    console.log("end date: ", endDateString);    
+    // console.log("end date: ", endDateString);    
     
     const newOffset = offset + 10
     const newDate = dayjs().subtract(newOffset, "day")
     
     const startDateString = dayjs(newDate).format("YYYY-MM-DD")
-    console.log("start date: ", startDateString);
+    // console.log("start date: ", startDateString);
 
     setDateStringForApi(prevData => {
       return ({
@@ -859,7 +868,7 @@ function App() {
       // console.log('window.pageYOffset', window.pageYOffset);    
       // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
       // const position = document.documentElement.scrollTop;
-      
+            
       if (mode.saves === false) {
         if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
           console.log("infinite scroll v1")     
@@ -882,6 +891,7 @@ function App() {
         }}  
       }
 
+      
     const debounceHandleScroll = debounce(handleScroll, 800)
 
     // window.addEventListener('scroll', handleScroll);
