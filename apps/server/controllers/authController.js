@@ -45,13 +45,6 @@ const handleLogin = async (req, res) => {
         const albumData = foundUser.albums;
         const profilePhoto = foundUser.profilePhoto;
 
-        // req.session.cookie = {
-        //     sameSite: "None",
-        //     secure: true,
-        //     maxAge: 2 * 24 * 60 * 60 * 1000
-        // }
-        // req.session.persist = persist;
-
         res.json({ 
             message: `user ${user} successfully logged in`,
             likedItemData: likedItemData,
