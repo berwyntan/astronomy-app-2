@@ -6,13 +6,11 @@
   },
   "devDependencies": {
     "cypress": "^11.0.1",
+    "cypress-mongodb": "^5.1.4",
+    "dotenv": "^16.0.3",
     "turbo": "^1.6.3"
   },
   "workspaces": [
     "apps/*"
-  ],
-  "dependencies": {
-    "cypress-mongodb": "^5.1.2",
-    "dotenv": "^16.0.3"
-  }
+  ]
 }
