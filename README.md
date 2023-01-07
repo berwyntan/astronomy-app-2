@@ -70,6 +70,8 @@ Routes for every page, that are accessible when page is refreshed or url is type
 
 ### - Automated testing
 Some automated testing using Cypress, like checking infinite scroll and search.
+Testing video on Youtube:
+https://youtu.be/1E-4zfv2pGM
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 

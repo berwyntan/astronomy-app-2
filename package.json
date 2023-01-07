@@ -12,6 +12,7 @@
     "apps/*"
   ],
   "dependencies": {
-    "cypress-mongodb": "^5.1.2"
+    "cypress-mongodb": "^5.1.2",
+    "dotenv": "^16.0.3"
   }
 }
