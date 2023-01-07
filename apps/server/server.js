@@ -42,9 +42,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-app.get("/*", (req, res) => {
-    res.sendFile(path.resolve("../client/dist/index.html"));
-  });
+// app.get("/*", (req, res) => {
+//     res.sendFile(path.resolve("../client/dist/index.html"));
+//   });
 
 app.use(verifyJWT);
 app.use('/update', require('./routes/update'));
