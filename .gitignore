@@ -2,3 +2,4 @@ node_modules
 cypress.config.js
 .env
 dist
+.turbo
